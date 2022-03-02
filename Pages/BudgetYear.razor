@@ -1,0 +1,50 @@
+﻿@page "/budgetyear"
+@inject IePRService ePRService
+@inject NavigationManager NavigationManager
+
+<h3>BudgetYear</h3>
+
+<body>
+    <div>
+        <button class="btn btn-primary mb-3" @onclick="CreateNewBudgetYear">Create New BudgetYear</button>
+        <table class="table table-bordered table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Code</th>
+                    <th>Description</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in ePRService.BudgetYears)
+                {
+                    <tr>
+                        <td>@item.Code</td>
+                        <td>@item.Description</td>                        
+                        <td>
+                            <button class="btn btn-primary" @onclick="(() => ShowBudgetYear(item.Code))"><i class="oi oi-pencil"></i></button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</body>
+
+@code {
+
+    protected override async Task OnInitializedAsync()
+    {
+        await ePRService.GetBudgetYear();
+    }
+
+    void ShowBudgetYear(int id)
+    {
+        NavigationManager.NavigateTo($"editcreatebudgetyear/{id}");
+    }
+
+    private void CreateNewBudgetYear()
+    {
+        NavigationManager.NavigateTo("/editcreatebudgetyear");
+    }
+}

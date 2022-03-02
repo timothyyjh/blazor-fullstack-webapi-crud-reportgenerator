@@ -1,0 +1,58 @@
+﻿@page "/PRItemSelector"
+@inject IePRService ePRService
+@inject NavigationManager NavigationManager
+
+<h3>Item Selector</h3>
+
+
+<body>
+    <EditForm Model="newItemcodeQtyPriceModel">
+        <div>            
+            <table class="table table-borderless table-striped table-hover">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Item Code</th>
+                        <th>Qty</th>
+                        <th>Price</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td>
+                            <InputSelectNumber id="codeselect" @bind-Value="newItemcodeQtyPriceModel.Code" class="form-control">
+                                @foreach (var item in ePRService.Items)
+                                {
+                                    <option value="@item.Code">@item.Code</option>
+                                }
+                            </InputSelectNumber>
+                        </td>
+                        <td>
+                            <InputNumber id="qtyselect" @bind-Value="newItemcodeQtyPriceModel.Qty" class="form-control" />
+                        </td>
+                        <td>
+                            <InputNumber id="priceselect" @bind-Value="newItemcodeQtyPriceModel.Price" class="form-control" />
+                        </td>                        
+                    </tr>
+                </tbody>
+            </table>
+            <button id="addbutton" class="btn btn-success mb-3 rounded-pill" @onclick="HandleSubmit"><i class="oi oi-check"></i></button>
+        </div>
+    </EditForm>
+</body>
+
+
+@code {
+    ItemcodeQtyPriceModel newItemcodeQtyPriceModel = new ItemcodeQtyPriceModel();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await ePRService.GetItem();
+    }
+
+    async Task HandleSubmit()
+    {
+        await ePRService.CreateItemcodeQtyPriceModel(newItemcodeQtyPriceModel);
+        NavigationManager.NavigateTo("/prcreate");
+    }
+}

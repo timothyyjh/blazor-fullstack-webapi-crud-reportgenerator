@@ -1,0 +1,80 @@
+﻿@page "/editcreatebudgetyear"
+@page "/editcreatebudgetyear/{id:int}"
+@inject IePRService ePRService
+@inject NavigationManager NavigationManager
+@using BlazorReportingTools.Models 
+
+@if (Id == null)
+{
+    <h3>Create a New BudgetYear</h3>
+}
+else
+{
+    <h3>Edit @newBudgetYear.Code</h3>
+}
+
+<body>
+    <EditForm Model="newBudgetYear" OnValidSubmit="HandleSubmit">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+        <div>
+            <label for="code">Code:</label>
+            <InputNumber @bind-Value="newBudgetYear.Code" class="form-control" />
+        </div>
+        <div>
+            <label for="name">Description:</label>
+            <InputText @bind-Value="newBudgetYear.Description" class="form-control" />
+        </div>        
+        <br />
+        <button type="submit" class="btn btn-primary">@btnText</button>
+        <button type="button" class="btn btn-danger" @onclick="Delete">Delete</button>
+        <button type="button" class="btn btn-warning" @onclick="Back">Cancel</button>
+    </EditForm>    
+</body>
+
+@code {
+    [Parameter]
+    public int? Id { get; set; }
+
+    string btnText = string.Empty;
+
+    BudgetYearModel newBudgetYear = new BudgetYearModel();
+
+    protected override async Task OnInitializedAsync()
+    {
+        btnText = Id == null ? "Save New BudgetYear" : "Update BudgetYear";
+        await ePRService.GetBudgetYear();
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if (Id == null)
+        { }
+        else
+        {
+            newBudgetYear = await ePRService.GetBudgetYearId((int)Id);
+        }
+    }
+
+    async Task HandleSubmit()
+    {
+        if (Id == null)
+        {
+            await ePRService.CreateBudgetYear(newBudgetYear);
+        }
+        else
+        {
+            await ePRService.UpdateBudgetYear(newBudgetYear);
+        }
+    }
+
+    async Task Delete()
+    {
+        await ePRService.DeleteBudgetYear(newBudgetYear.Code);
+    }
+
+    void Back()
+    {
+        NavigationManager.NavigateTo("budgetyear");
+    }
+}

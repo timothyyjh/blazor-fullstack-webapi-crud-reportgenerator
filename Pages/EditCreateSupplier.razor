@@ -1,0 +1,96 @@
+﻿@page "/editcreatesupplier"
+@page "/editcreatesupplier/{id:int}"
+@inject IePRService ePRService
+@inject NavigationManager NavigationManager
+@using BlazorReportingTools.Models 
+
+@if (Id == null)
+{
+    <h3>Create a New Supplier</h3>
+}
+else
+{
+    <h3>Edit @newSupplier.Code</h3>
+}
+
+<body>
+    <EditForm Model="newSupplier" OnValidSubmit="HandleSubmit">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+        <div>
+            <label for="code">Code:</label>
+            <InputNumber @bind-Value="newSupplier.Code" class="form-control" />
+        </div>
+        <div>
+            <label for="name">Name:</label>
+            <InputText @bind-Value="newSupplier.Name" class="form-control" />
+        </div>
+        <div>
+            <label for="addressline1">Address line 1:</label>
+            <InputText @bind-Value="newSupplier.AddressLine1" class="form-control" />
+        </div>
+        <div>
+            <label for="addressline2">Address line 2:</label>
+            <InputText @bind-Value="newSupplier.AddressLine2" class="form-control" />
+        </div>
+        <div>
+            <label for="addressline3">Address line 3:</label>
+            <InputText @bind-Value="newSupplier.AddressLine3" class="form-control" />
+        </div>
+        <div>
+            <label for="addressline4">Address line 4:</label>
+            <InputText @bind-Value="newSupplier.AddressLine4" class="form-control" />
+        </div>
+        <br />
+        <button type="submit" class="btn btn-primary">@btnText</button>
+        <button type="button" class="btn btn-danger" @onclick="Delete">Delete</button>
+        <button type="button" class="btn btn-warning" @onclick="Back">Cancel</button>
+    </EditForm>    
+</body>
+
+@code {
+    [Parameter]
+    public int? Id { get; set; }
+
+    string btnText = string.Empty;
+
+    SupplierModel newSupplier = new SupplierModel();
+
+    protected override async Task OnInitializedAsync()
+    {
+        btnText = Id == null ? "Save New Supplier" : "Update Supplier";
+        await ePRService.GetSupplier();
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if (Id == null)
+        { }
+        else
+        {
+            newSupplier = await ePRService.GetSupplierId((int)Id);
+        }
+    }
+
+    async Task HandleSubmit()
+    {
+        if (Id == null)
+        {
+            await ePRService.CreateSupplier(newSupplier);
+        }
+        else
+        {
+            await ePRService.UpdateSupplier(newSupplier);
+        }
+    }
+
+    async Task Delete()
+    {
+        await ePRService.DeleteSupplier(newSupplier.Code);
+    }
+
+    void Back()
+    {
+        NavigationManager.NavigateTo("supplier");
+    }
+}

@@ -1,0 +1,108 @@
+﻿@page "/prcreate"
+@inject IePRService ePRService
+@inject NavigationManager NavigationManager
+
+<h3>New Purchase Order</h3>
+
+<body>
+    <EditForm Model="newPRItemSelectModel">
+        <div>
+            <DataAnnotationsValidator />
+            <ValidationSummary />
+            <table class="table table-bordered table-striped table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Date:</th>
+                    <th>Name:</th>
+                    <th>Doc No:</th>
+                    <th>Supplier:</th>
+                    <th>Address Line</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <label for="date"></label>
+                        <InputDate id="dateinput" class="form-control" @bind-Value="newPRItemSelectModel.Date" />
+                    </td>
+                    <td>
+                        <label for="name"/>
+                        <InputText id="nameinput" class="form-control" @bind-Value="newPRItemSelectModel.Name" />
+                    </td>
+                    <td>
+                        <label for="docno"></label>
+                        <InputNumber id="numberinput" class="form-control" @bind-Value="newPRItemSelectModel.DocNumber" />
+                    </td>
+                    <td>
+                        <label for="supplier"></label>
+                        <InputSelect id="supplierselect" @bind-Value="newPRItemSelectModel.Supplier" class="form-control">
+                            @foreach (var supplier in ePRService.Suppliers)
+                            {
+                                <option value="@supplier.Code">@supplier.Code</option>
+                            }
+                        </InputSelect>
+                    </td>                    
+                    <td>
+                        <label for="address"></label>
+                        <InputText id="addressinput" placeholder="Address Line 1" @bind-Value="newPRItemSelectModel.AddressLine1" class="form-control"  />
+                        <InputText id="addressinput" placeholder="Address Line 2" @bind-Value="newPRItemSelectModel.AddressLine2" class="form-control" />
+                        <InputText id="addressinput" placeholder="Address Line 3" @bind-Value="newPRItemSelectModel.AddressLine3" class="form-control" />
+                        <InputText id="addressinput" placeholder="Address Line 4" @bind-Value="newPRItemSelectModel.AddressLine4" class="form-control" />
+                    </td>
+                </tr>            
+            </tbody>
+            </table>            
+        </div>
+        </EditForm>
+
+    <EditForm Model="newItemcodeQtyPriceModel">
+        <button class="btn btn-primary mb-3 rounded-pill" @onclick="HandleItemReferenceAdd"><i class="oi oi-plus"></i></button>
+        <table class="table table-bordered table-striped table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Code</th>
+                    <th>Qty</th>
+                    <th>Price</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>                
+                @foreach (var item in ePRService.ItemcodeQtyPriceModels)
+                {
+                    <tr>
+                        <td>@item.Code</td>
+                        <td>@item.Qty</td>
+                        <td>@item.Price</td>
+                        <td><button class="btn btn-danger rounded-pill" @onclick="DeleteItem"><i class="oi oi-minus"></i></button></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </EditForm>
+</body>
+
+@code {    
+    ItemcodeQtyPriceModel newItemcodeQtyPriceModel = new ItemcodeQtyPriceModel();
+
+    PRItemSelectModel newPRItemSelectModel = new PRItemSelectModel();
+
+    SupplierModel newSupplier = new SupplierModel();
+
+    ItemModel newItem = new ItemModel();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await ePRService.GetSupplier();
+        await ePRService.GetItemcodeQtyPriceModel();
+    }
+
+    private void HandleItemReferenceAdd()
+    {
+        NavigationManager.NavigateTo("/PRItemSelector");
+    }
+
+    private void DeleteItem()
+    {
+        ePRService.DeleteItemcodeQtyPriceModel(newItemcodeQtyPriceModel.Code);        
+    }
+}

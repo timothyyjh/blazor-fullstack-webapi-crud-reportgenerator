@@ -1,0 +1,56 @@
+﻿@page "/item"
+@inject IePRService ePRService
+@inject NavigationManager NavigationManager
+
+<h3>Item</h3>
+
+<body>
+    <div>
+        <button class="btn btn-primary mb-3" @onclick="CreateNewItem">Create New Item</button>
+        <table class="table table-bordered table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Code</th>
+                    <th>Name</th>
+                    <th>UOM</th>
+                    <th>Description</th>
+                    <th>Price</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in ePRService.Items)
+                {
+                    <tr>
+                        <td>@item.Code</td>
+                        <td>@item.Name</td>
+                        <td>@item.UOM</td>
+                        <td>@item.Description</td>
+                        <td>@item.Price</td>
+                        <td>
+                            <button class="btn btn-primary" @onclick="(() => ShowItem(item.Code))"><i class="oi oi-pencil"></i></button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</body>
+
+@code {
+
+    protected override async Task OnInitializedAsync()
+    {
+        await ePRService.GetItem();
+    }
+
+    void ShowItem(int id)
+    {
+        NavigationManager.NavigateTo($"editcreateitem/{id}");
+    }
+
+    private void CreateNewItem()
+    {
+        NavigationManager.NavigateTo("/editcreateitem");
+    }
+}

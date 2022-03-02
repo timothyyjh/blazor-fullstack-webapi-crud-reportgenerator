@@ -1,0 +1,58 @@
+﻿@page "/supplier"
+@inject IePRService ePRService
+@inject NavigationManager NavigationManager
+
+<h3>Supplier</h3>
+
+<body>
+    <div>
+        <button class="btn btn-primary mb-3" @onclick="CreateNewSupplier">Create New Supplier</button>
+        <table class="table table-bordered table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Code</th>
+                    <th>Name</th>
+                    <th>Address Line 1</th>
+                    <th>Address Line 2</th>
+                    <th>Address Line 3</th>
+                    <th>Address Line 4</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                    @foreach (var item in ePRService.Suppliers)
+                    {
+                        <tr>
+                            <td>@item.Code</td>
+                            <td>@item.Name</td>
+                            <td>@item.AddressLine1</td>
+                            <td>@item.AddressLine2</td>
+                            <td>@item.AddressLine3</td>
+                            <td>@item.AddressLine4</td>
+                            <td>
+                                <button class="btn btn-primary" @onclick="(() => ShowSupplier(item.Code))"><i class="oi oi-pencil"></i></button>     
+                            </td>
+                        </tr>
+                    }
+            </tbody>
+        </table>
+    </div>
+</body>
+
+@code {
+
+    protected override async Task OnInitializedAsync()
+    {
+        await ePRService.GetSupplier();
+    }
+
+    void ShowSupplier(int id)
+    {
+        NavigationManager.NavigateTo($"editcreatesupplier/{id}");
+    }
+
+    private void CreateNewSupplier()
+    {
+        NavigationManager.NavigateTo("/editcreatesupplier");
+    }
+}
