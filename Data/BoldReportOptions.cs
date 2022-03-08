@@ -9,6 +9,8 @@ namespace BlazorReportingTools.Data
     {
         public string ReportName { get; set; }
         public string ServiceURL { get; set; }
+        
+        public string ServerURL { get; set; }
     }
     public class BoldReportDesignerOptions
     {

@@ -89,16 +89,28 @@ using BlazorReportingTools.Models;
 #line default
 #line hidden
 #nullable disable
-    [Microsoft.AspNetCore.Components.RouteAttribute("/PRView")]
-    public partial class PRView : Microsoft.AspNetCore.Components.ComponentBase
+#nullable restore
+#line 12 "C:\Users\Timothy Yeo\source\repos\blazor-presoft\_Imports.razor"
+using Radzen;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 13 "C:\Users\Timothy Yeo\source\repos\blazor-presoft\_Imports.razor"
+using Radzen.Blazor;
+
+#line default
+#line hidden
+#nullable disable
+    [Microsoft.AspNetCore.Components.RouteAttribute("/TelerikReport")]
+    public partial class TelerikReport : Microsoft.AspNetCore.Components.ComponentBase
     {
         #pragma warning disable 1998
         protected override void BuildRenderTree(Microsoft.AspNetCore.Components.Rendering.RenderTreeBuilder __builder)
         {
         }
         #pragma warning restore 1998
-        [global::Microsoft.AspNetCore.Components.InjectAttribute] private NavigationManager NavigationManager { get; set; }
-        [global::Microsoft.AspNetCore.Components.InjectAttribute] private IePRService ePRService { get; set; }
     }
 }
 #pragma warning restore 1591

@@ -13,8 +13,8 @@ namespace BlazorReportingTools.Services
         List<SupplierModel> Suppliers { get; set; }
         List<ItemModel> Items { get; set; }
         List<BudgetYearModel> BudgetYears { get; set; }
-        List<PRItemSelectModel> PRItemSelectModels { get; set; }
-        List<ItemcodeQtyPriceModel> ItemcodeQtyPriceModels { get; set; }
+        List<PurchaseOrderModel> PurchaseOrders { get; set; }
+        List<ItemListModel> ItemLists { get; set; }
 
         // SUPPLIER SERVICES
         Task GetSupplier();
@@ -37,18 +37,18 @@ namespace BlazorReportingTools.Services
         Task UpdateBudgetYear(BudgetYearModel supplier);
         Task DeleteBudgetYear(int id);
 
-        //PRItemSelectModel SERVICES
-        Task GetPRItemSelectModel();
-        Task<PRItemSelectModel> GetPRItemSelectModelId(int id);
-        Task CreatePRItemSelectModel(PRItemSelectModel supplier);
-        Task UpdatePRItemSelectModel(PRItemSelectModel supplier);
-        Task DeletePRItemSelectModel(int id);
+        //PurchaseOrderModel SERVICES
+        Task GetPurchaseOrderModel();
+        Task<PurchaseOrderModel> GetPurchaseOrderModelId(int id);
+        Task CreatePurchaseOrderModel(PurchaseOrderModel supplier);
+        Task UpdatePurchaseOrderModel(PurchaseOrderModel supplier);
+        Task DeletePurchaseOrderModel(int id);
 
-        //ItemcodeQtyPriceModel SERVICES
-        Task GetItemcodeQtyPriceModel();
-        Task<ItemcodeQtyPriceModel> GetItemcodeQtyPriceModelId(int id);
-        Task CreateItemcodeQtyPriceModel(ItemcodeQtyPriceModel supplier);
-        Task UpdateItemcodeQtyPriceModel(ItemcodeQtyPriceModel supplier);
-        Task DeleteItemcodeQtyPriceModel(int id);
+        //ItemListModel SERVICES
+        Task GetPurchaseOrderItemList();
+        Task<ItemListModel> GetPurchaseOrderItemListID(int id);
+        Task CreatePurchaseOrderItemList(ItemListModel supplier);
+        Task UpdatePurchaseOrderItemList(ItemListModel supplier);
+        Task DeletePurchaseOrderItemList(int id);
     }
 }

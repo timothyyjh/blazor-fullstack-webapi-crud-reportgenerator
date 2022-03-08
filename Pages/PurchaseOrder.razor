@@ -1,0 +1,70 @@
+﻿@page "/"
+@page "/PurchaseOrder"
+@inject IePRService ePRService
+@inject NavigationManager NavigationManager
+
+<h3>Purchase Order Complete List</h3>
+
+<button class="btn btn-success mb-3" @onclick="AddPR"><i class="oi oi-plus rounded-pill"></i></button>
+<table class="table table-borderless table-striped table-hover table-responsive">
+    <thead class="thead-dark">
+        <tr>
+            <th>Code</th>
+            <th>Name</th>
+            <th>Doc No</th>
+            <th>Date</th>
+            <th>Supplier</th>
+            <th>Address Line 1</th>
+            <th>Address Line 2</th>
+            <th>Address Line 3</th>
+            <th>Address Line 4</th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in ePRService.PurchaseOrders)
+        {
+            <tr>
+                <td>@item.Code</td>
+                <td>@item.Name</td>
+                <td>@item.DocNumber</td>
+                <td>@item.Date</td>
+                <td>@item.Supplier</td>
+                <td>@item.AddressLine1</td>
+                <td>@item.AddressLine2</td>
+                <td>@item.AddressLine3</td>
+                <td>@item.AddressLine4</td>
+                <td><button class="btn btn-primary m-3" @onclick="(() => ViewPR(item.Code))">PR + PRdtl</button></td>
+                <td><button class="btn btn-danger m-3"><i class="oi oi-trash"></i></button></td>
+                <td><button class="btn btn-warning m-3">Report <i class="oi oi-print"></i></button></td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@code {
+
+    protected override async Task OnInitializedAsync()
+    {
+        await ePRService.GetPurchaseOrderModel();
+        await ePRService.GetPurchaseOrderItemList();
+    }
+
+    private void AddPR()
+    {
+        NavigationManager.NavigateTo("/PRCreate");
+    }
+
+    private void ViewPR(int id)
+    {
+        NavigationManager.NavigateTo($"/ViewPR/{id}");
+    }
+
+    //async Task DeletePR()
+    //{
+    //    //await ePRService.DeletePurchaseOrderModel();
+    //}
+}

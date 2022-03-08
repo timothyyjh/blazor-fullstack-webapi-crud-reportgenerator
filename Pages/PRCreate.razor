@@ -5,13 +5,14 @@
 <h3>New Purchase Order</h3>
 
 <body>
-    <EditForm Model="newPRItemSelectModel">
+    <EditForm Model="newPurchaseOrderModel" OnValidSubmit="HandleSave">
         <div>
             <DataAnnotationsValidator />
             <ValidationSummary />
             <table class="table table-bordered table-striped table-hover">
             <thead class="thead-dark">
                 <tr>
+                    <th>Code:</th>
                     <th>Date:</th>
                     <th>Name:</th>
                     <th>Doc No:</th>
@@ -22,69 +23,72 @@
             <tbody>
                 <tr>
                     <td>
-                        <label for="date"></label>
-                        <InputDate id="dateinput" class="form-control" @bind-Value="newPRItemSelectModel.Date" />
+                        <label for="code"></label>
+                        <InputNumber id="codeinput" class="form-control" @bind-Value="newPurchaseOrderModel.Code" />
                     </td>
                     <td>
-                        <label for="name"/>
-                        <InputText id="nameinput" class="form-control" @bind-Value="newPRItemSelectModel.Name" />
+                        <label for="date"></label>
+                        <InputDate id="dateinput" class="form-control" @bind-Value="newPurchaseOrderModel.Date" />
+                    </td>
+                    <td>
+                        <label for="name" />
+                        <InputText id="nameinput" class="form-control" @bind-Value="newPurchaseOrderModel.Name" />
                     </td>
                     <td>
                         <label for="docno"></label>
-                        <InputNumber id="numberinput" class="form-control" @bind-Value="newPRItemSelectModel.DocNumber" />
+                        <InputNumber id="numberinput" class="form-control" @bind-Value="newPurchaseOrderModel.DocNumber" />
                     </td>
                     <td>
                         <label for="supplier"></label>
-                        <InputSelect id="supplierselect" @bind-Value="newPRItemSelectModel.Supplier" class="form-control">
+                        <InputSelectNumber id="supplierselect" @bind-Value="newPurchaseOrderModel.Supplier" class="form-control">
                             @foreach (var supplier in ePRService.Suppliers)
                             {
                                 <option value="@supplier.Code">@supplier.Code</option>
                             }
-                        </InputSelect>
-                    </td>                    
+                        </InputSelectNumber>
+                    </td>
                     <td>
                         <label for="address"></label>
-                        <InputText id="addressinput" placeholder="Address Line 1" @bind-Value="newPRItemSelectModel.AddressLine1" class="form-control"  />
-                        <InputText id="addressinput" placeholder="Address Line 2" @bind-Value="newPRItemSelectModel.AddressLine2" class="form-control" />
-                        <InputText id="addressinput" placeholder="Address Line 3" @bind-Value="newPRItemSelectModel.AddressLine3" class="form-control" />
-                        <InputText id="addressinput" placeholder="Address Line 4" @bind-Value="newPRItemSelectModel.AddressLine4" class="form-control" />
+                        <InputText id="addressinput" placeholder="Address Line 1" @bind-Value="newPurchaseOrderModel.AddressLine1" class="form-control" />
+                        <InputText id="addressinput" placeholder="Address Line 2" @bind-Value="newPurchaseOrderModel.AddressLine2" class="form-control" />
+                        <InputText id="addressinput" placeholder="Address Line 3" @bind-Value="newPurchaseOrderModel.AddressLine3" class="form-control" />
+                        <InputText id="addressinput" placeholder="Address Line 4" @bind-Value="newPurchaseOrderModel.AddressLine4" class="form-control" />
                     </td>
                 </tr>            
             </tbody>
             </table>            
-        </div>
-        </EditForm>
+            <br />
 
-    <EditForm Model="newItemcodeQtyPriceModel">
+        </div>
+        
         <button class="btn btn-primary mb-3 rounded-pill" @onclick="HandleItemReferenceAdd"><i class="oi oi-plus"></i></button>
-        <table class="table table-bordered table-striped table-hover">
+        <table class="table table-borderless table-striped table-hover">
             <thead class="thead-dark">
                 <tr>
                     <th>Code</th>
                     <th>Qty</th>
                     <th>Price</th>
-                    <th></th>
                 </tr>
             </thead>
-            <tbody>                
-                @foreach (var item in ePRService.ItemcodeQtyPriceModels)
-                {
+            <tbody>
+                @foreach (var item in ePRService.ItemLists)
+	            {
                     <tr>
                         <td>@item.Code</td>
                         <td>@item.Qty</td>
                         <td>@item.Price</td>
-                        <td><button class="btn btn-danger rounded-pill" @onclick="DeleteItem"><i class="oi oi-minus"></i></button></td>
-                    </tr>
-                }
+                    </tr>		 
+	            }
             </tbody>
         </table>
+    <button class="btn btn-success mb-3" type="submit">Save</button>    
     </EditForm>
 </body>
 
-@code {    
-    ItemcodeQtyPriceModel newItemcodeQtyPriceModel = new ItemcodeQtyPriceModel();
+@code {
+    PurchaseOrderModel newPurchaseOrderModel = new PurchaseOrderModel();
 
-    PRItemSelectModel newPRItemSelectModel = new PRItemSelectModel();
+    ItemListModel newItemListModel = new ItemListModel();
 
     SupplierModel newSupplier = new SupplierModel();
 
@@ -93,16 +97,22 @@
     protected override async Task OnInitializedAsync()
     {
         await ePRService.GetSupplier();
-        await ePRService.GetItemcodeQtyPriceModel();
+        await ePRService.GetPurchaseOrderItemList();
     }
 
     private void HandleItemReferenceAdd()
     {
-        NavigationManager.NavigateTo("/PRItemSelector");
+        NavigationManager.NavigateTo("/AddItemToPO");
     }
 
     private void DeleteItem()
     {
-        ePRService.DeleteItemcodeQtyPriceModel(newItemcodeQtyPriceModel.Code);        
+        ePRService.DeletePurchaseOrderItemList(newItemListModel.Code);
+    }
+
+    private void HandleSave()
+    {
+        ePRService.CreatePurchaseOrderModel(newPurchaseOrderModel);
+        NavigationManager.NavigateTo("/purchaseorder");
     }
 }

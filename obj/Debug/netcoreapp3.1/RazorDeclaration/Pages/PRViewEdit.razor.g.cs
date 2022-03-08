@@ -11,6 +11,7 @@ namespace BlazorReportingTools.Pages
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Components;
 #nullable restore
 #line 1 "C:\Users\Timothy Yeo\source\repos\blazor-presoft\_Imports.razor"
 using System.Net.Http;
@@ -54,6 +55,13 @@ using Microsoft.AspNetCore.Components.Web;
 #line hidden
 #nullable disable
 #nullable restore
+#line 7 "C:\Users\Timothy Yeo\source\repos\blazor-presoft\_Imports.razor"
+using Microsoft.JSInterop;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
 #line 8 "C:\Users\Timothy Yeo\source\repos\blazor-presoft\_Imports.razor"
 using BlazorReportingTools;
 
@@ -81,29 +89,8 @@ using BlazorReportingTools.Models;
 #line default
 #line hidden
 #nullable disable
-#nullable restore
-#line 3 "C:\Users\Timothy Yeo\source\repos\blazor-presoft\Pages\ReportViewer.razor"
-using Microsoft.JSInterop;
-
-#line default
-#line hidden
-#nullable disable
-#nullable restore
-#line 4 "C:\Users\Timothy Yeo\source\repos\blazor-presoft\Pages\ReportViewer.razor"
-using Microsoft.AspNetCore.Components;
-
-#line default
-#line hidden
-#nullable disable
-#nullable restore
-#line 6 "C:\Users\Timothy Yeo\source\repos\blazor-presoft\Pages\ReportViewer.razor"
-using BlazorReportingTools.Data;
-
-#line default
-#line hidden
-#nullable disable
-    [Microsoft.AspNetCore.Components.RouteAttribute("/ReportViewer")]
-    public partial class ReportViewer : Microsoft.AspNetCore.Components.ComponentBase
+    [Microsoft.AspNetCore.Components.RouteAttribute("/ViewPR/{id:int}")]
+    public partial class PRViewEdit : Microsoft.AspNetCore.Components.ComponentBase
     {
         #pragma warning disable 1998
         protected override void BuildRenderTree(Microsoft.AspNetCore.Components.Rendering.RenderTreeBuilder __builder)
@@ -111,31 +98,52 @@ using BlazorReportingTools.Data;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 10 "C:\Users\Timothy Yeo\source\repos\blazor-presoft\Pages\ReportViewer.razor"
+#line 86 "C:\Users\Timothy Yeo\source\repos\blazor-presoft\Pages\PRViewEdit.razor"
        
-    // ReportViewer options
-    BoldReportViewerOptions viewerOptions = new BoldReportViewerOptions();
+    [Parameter]
+    public int? Id { get; set; }
 
-
-    // Used to render the Bold Report Viewer component in Blazor page.
-    public async void RenderReportViewer()
+    protected override async Task OnParametersSetAsync()
     {
-        viewerOptions.ReportName = "sales-order-detail";
-        viewerOptions.ServiceURL = "/api/BoldReportsAPI";
-        viewerOptions.ServerURL = "http://desktop-haphhh3/Reports/";
-        await JSRuntime.InvokeVoidAsync("BoldReports.RenderViewer", "report-viewer", viewerOptions);
+        newPurchaseOrderModel = await ePRService.GetPurchaseOrderModelId((int)Id);
+        //newItemListModel = await ePRService.GetPurchaseOrderItemListID((int)Id);
     }
 
-    // Initial rendering of Bold Report Viewer
-    protected override void OnAfterRender(bool firstRender)
+    ItemListModel newItemListModel = new ItemListModel();
+
+    PurchaseOrderModel newPurchaseOrderModel = new PurchaseOrderModel();
+
+    SupplierModel newSupplier = new SupplierModel();
+
+    ItemModel newItem = new ItemModel();
+
+    protected override async Task OnInitializedAsync()
     {
-        RenderReportViewer();
+        await ePRService.GetSupplier();
+        await ePRService.GetPurchaseOrderItemList();
+    }
+
+    private void HandleItemReferenceAdd()
+    {
+        NavigationManager.NavigateTo($"/ItemList/{newPurchaseOrderModel.Code}");
+    }
+
+    private void DeleteItem()
+    {
+        ePRService.DeletePurchaseOrderItemList(newItemListModel.Code);
+    }
+
+    async Task HandleSave()
+    {
+        await ePRService.UpdatePurchaseOrderModel(newPurchaseOrderModel);
+        NavigationManager.NavigateTo("/purchaseorder");
     }
 
 #line default
 #line hidden
 #nullable disable
-        [global::Microsoft.AspNetCore.Components.InjectAttribute] private IJSRuntime JSRuntime { get; set; }
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private NavigationManager NavigationManager { get; set; }
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private IePRService ePRService { get; set; }
     }
 }
 #pragma warning restore 1591

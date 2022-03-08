@@ -11,6 +11,7 @@ namespace BlazorReportingTools.Pages
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Components;
 #nullable restore
 #line 1 "C:\Users\Timothy Yeo\source\repos\blazor-presoft\_Imports.razor"
 using System.Net.Http;
@@ -54,6 +55,13 @@ using Microsoft.AspNetCore.Components.Web;
 #line hidden
 #nullable disable
 #nullable restore
+#line 7 "C:\Users\Timothy Yeo\source\repos\blazor-presoft\_Imports.razor"
+using Microsoft.JSInterop;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
 #line 8 "C:\Users\Timothy Yeo\source\repos\blazor-presoft\_Imports.razor"
 using BlazorReportingTools;
 
@@ -81,29 +89,8 @@ using BlazorReportingTools.Models;
 #line default
 #line hidden
 #nullable disable
-#nullable restore
-#line 3 "C:\Users\Timothy Yeo\source\repos\blazor-presoft\Pages\ReportViewer.razor"
-using Microsoft.JSInterop;
-
-#line default
-#line hidden
-#nullable disable
-#nullable restore
-#line 4 "C:\Users\Timothy Yeo\source\repos\blazor-presoft\Pages\ReportViewer.razor"
-using Microsoft.AspNetCore.Components;
-
-#line default
-#line hidden
-#nullable disable
-#nullable restore
-#line 6 "C:\Users\Timothy Yeo\source\repos\blazor-presoft\Pages\ReportViewer.razor"
-using BlazorReportingTools.Data;
-
-#line default
-#line hidden
-#nullable disable
-    [Microsoft.AspNetCore.Components.RouteAttribute("/ReportViewer")]
-    public partial class ReportViewer : Microsoft.AspNetCore.Components.ComponentBase
+    [Microsoft.AspNetCore.Components.RouteAttribute("/ItemList/{id:int}")]
+    public partial class ItemList : Microsoft.AspNetCore.Components.ComponentBase
     {
         #pragma warning disable 1998
         protected override void BuildRenderTree(Microsoft.AspNetCore.Components.Rendering.RenderTreeBuilder __builder)
@@ -111,31 +98,41 @@ using BlazorReportingTools.Data;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 10 "C:\Users\Timothy Yeo\source\repos\blazor-presoft\Pages\ReportViewer.razor"
+#line 45 "C:\Users\Timothy Yeo\source\repos\blazor-presoft\Pages\ItemList.razor"
        
-    // ReportViewer options
-    BoldReportViewerOptions viewerOptions = new BoldReportViewerOptions();
+    [Parameter]
+    public int? Id { get; set; }
 
+    //protected override async Task OnParametersSetAsync()
+    //{
+    //    newItemListModel = await ePRService.GetPurchaseOrderItemListID((int)Id);
+    //}
 
-    // Used to render the Bold Report Viewer component in Blazor page.
-    public async void RenderReportViewer()
+    ItemListModel newItemListModel = new ItemListModel();
+
+    PurchaseOrderModel newPurchaseOrderModel = new PurchaseOrderModel();
+
+    protected override async Task OnInitializedAsync()
     {
-        viewerOptions.ReportName = "sales-order-detail";
-        viewerOptions.ServiceURL = "/api/BoldReportsAPI";
-        viewerOptions.ServerURL = "http://desktop-haphhh3/Reports/";
-        await JSRuntime.InvokeVoidAsync("BoldReports.RenderViewer", "report-viewer", viewerOptions);
+        await ePRService.GetItem();
     }
 
-    // Initial rendering of Bold Report Viewer
-    protected override void OnAfterRender(bool firstRender)
+    async Task HandleSubmit()
     {
-        RenderReportViewer();
+        await ePRService.CreatePurchaseOrderItemList(newItemListModel);
+        NavigationManager.NavigateTo($"/ViewPR/{Id}");
+    }
+
+    private void Cancel()
+    {
+        NavigationManager.NavigateTo($"/ViewPR/{Id}");
     }
 
 #line default
 #line hidden
 #nullable disable
-        [global::Microsoft.AspNetCore.Components.InjectAttribute] private IJSRuntime JSRuntime { get; set; }
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private NavigationManager NavigationManager { get; set; }
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private IePRService ePRService { get; set; }
     }
 }
 #pragma warning restore 1591

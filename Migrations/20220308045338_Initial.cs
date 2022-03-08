@@ -35,20 +35,22 @@ namespace BlazorReportingTools.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "PRItemSelectModels",
+                name: "PurchaseOrders",
                 columns: table => new
                 {
                     Code = table.Column<int>(nullable: false),
+                    Name = table.Column<string>(nullable: false),
                     Date = table.Column<DateTime>(nullable: false),
                     DocNumber = table.Column<int>(nullable: false),
-                    Supplier = table.Column<string>(nullable: false),
-                    Address = table.Column<string>(nullable: false),
-                    Qty = table.Column<int>(nullable: false),
-                    Price = table.Column<int>(nullable: false)
+                    Supplier = table.Column<int>(nullable: false),
+                    AddressLine1 = table.Column<string>(nullable: false),
+                    AddressLine2 = table.Column<string>(nullable: false),
+                    AddressLine3 = table.Column<string>(nullable: false),
+                    AddressLine4 = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PRItemSelectModels", x => x.Code);
+                    table.PrimaryKey("PK_PurchaseOrders", x => x.Code);
                 });
 
             migrationBuilder.CreateTable(
@@ -66,6 +68,33 @@ namespace BlazorReportingTools.Migrations
                 {
                     table.PrimaryKey("PK_Suppliers", x => x.Code);
                 });
+
+            migrationBuilder.CreateTable(
+                name: "ItemLists",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Code = table.Column<int>(nullable: false),
+                    Qty = table.Column<int>(nullable: false),
+                    Price = table.Column<int>(nullable: false),
+                    PurchaseOrderModelCode = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ItemLists", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ItemLists_PurchaseOrders_PurchaseOrderModelCode",
+                        column: x => x.PurchaseOrderModelCode,
+                        principalTable: "PurchaseOrders",
+                        principalColumn: "Code",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ItemLists_PurchaseOrderModelCode",
+                table: "ItemLists",
+                column: "PurchaseOrderModelCode");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -74,13 +103,16 @@ namespace BlazorReportingTools.Migrations
                 name: "BudgetYears");
 
             migrationBuilder.DropTable(
+                name: "ItemLists");
+
+            migrationBuilder.DropTable(
                 name: "Items");
 
             migrationBuilder.DropTable(
-                name: "PRItemSelectModels");
+                name: "Suppliers");
 
             migrationBuilder.DropTable(
-                name: "Suppliers");
+                name: "PurchaseOrders");
         }
     }
 }

@@ -33,6 +33,32 @@ namespace BlazorReportingTools.Migrations
                     b.ToTable("BudgetYears");
                 });
 
+            modelBuilder.Entity("BlazorReportingTools.Models.ItemListModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("Code")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Price")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("PurchaseOrderModelCode")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Qty")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PurchaseOrderModelCode");
+
+                    b.ToTable("ItemLists");
+                });
+
             modelBuilder.Entity("BlazorReportingTools.Models.ItemModel", b =>
                 {
                     b.Property<int>("Code")
@@ -58,23 +84,7 @@ namespace BlazorReportingTools.Migrations
                     b.ToTable("Items");
                 });
 
-            modelBuilder.Entity("BlazorReportingTools.Models.ItemcodeQtyPriceModel", b =>
-                {
-                    b.Property<int>("Code")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Price")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Qty")
-                        .HasColumnType("int");
-
-                    b.HasKey("Code");
-
-                    b.ToTable("ItemcodeQtyPriceModels");
-                });
-
-            modelBuilder.Entity("BlazorReportingTools.Models.PRItemSelectModel", b =>
+            modelBuilder.Entity("BlazorReportingTools.Models.PurchaseOrderModel", b =>
                 {
                     b.Property<int>("Code")
                         .HasColumnType("int");
@@ -101,27 +111,16 @@ namespace BlazorReportingTools.Migrations
                     b.Property<int>("DocNumber")
                         .HasColumnType("int");
 
-                    b.Property<string>("Item")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Price")
+                    b.Property<int>("Supplier")
                         .HasColumnType("int");
-
-                    b.Property<int>("Qty")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Supplier")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Code");
 
-                    b.ToTable("PRItemSelectModels");
+                    b.ToTable("PurchaseOrders");
                 });
 
             modelBuilder.Entity("BlazorReportingTools.Models.SupplierModel", b =>
@@ -150,6 +149,13 @@ namespace BlazorReportingTools.Migrations
                     b.HasKey("Code");
 
                     b.ToTable("Suppliers");
+                });
+
+            modelBuilder.Entity("BlazorReportingTools.Models.ItemListModel", b =>
+                {
+                    b.HasOne("BlazorReportingTools.Models.PurchaseOrderModel", null)
+                        .WithMany("ItemList")
+                        .HasForeignKey("PurchaseOrderModelCode");
                 });
 #pragma warning restore 612, 618
         }

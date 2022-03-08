@@ -1,0 +1,52 @@
+﻿@page "/AddItemToPO"
+@inject IePRService ePRService
+@inject NavigationManager NavigationManager
+
+<h3>Add Item to Purchase Order</h3>
+
+<body>
+    <div class="col-6">
+        <EditForm Model="_itemListModel">
+            <div class="form-group">
+                <label>Code:</label>
+                <InputSelectNumber @bind-Value="_itemListModel.Code" class="form-control">
+                    @foreach (var item in ePRService.Items)
+	                {
+		                <option value="@item.Code">@item.Code</option>
+	                }
+                </InputSelectNumber>
+            </div>
+                
+            <div class="form-group">
+                <label>Qty:</label>
+                <InputNumber @bind-Value="_itemListModel.Qty" class="form-control"/>
+            </div>
+
+            <div class="form-group">
+                <label>Price:</label>
+                <InputNumber @bind-Value="_itemListModel.Price" class="form-control" />
+            </div>
+            <button class="btn btn-success" @onclick="HandleSubmit">Submit</button>
+        </EditForm>
+    </div>
+
+
+</body>
+
+@code {
+
+    ItemListModel _itemListModel = new ItemListModel();
+
+    PurchaseOrderModel _purchaseOrderModel = new PurchaseOrderModel();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await ePRService.GetItem();
+    }
+
+    private void HandleSubmit()
+    {        
+        ePRService.CreatePurchaseOrderItemList(_itemListModel);
+        NavigationManager.NavigateTo("/prcreate");
+    }
+}

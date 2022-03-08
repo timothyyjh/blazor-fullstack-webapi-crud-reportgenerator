@@ -2,8 +2,9 @@
 window.BoldReports = {
     RenderViewer: function (elementID, reportViewerOptions) {
         $("#" + elementID).boldReportViewer({
-            reportPath: reportViewerOptions.reportName,
-            reportServiceUrl: reportViewerOptions.serviceURL
+            reportPath: "sales-order-detail",
+            reportServiceUrl: reportViewerOptions.serviceURL,
+            reportServerUrl: "http://desktop-haphhh3/Reports/"
         });
     },
     RenderDesigner: function (elementID, reportDesignerOptions) {

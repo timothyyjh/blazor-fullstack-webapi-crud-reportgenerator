@@ -2,7 +2,7 @@
 
 namespace BlazorReportingTools.Migrations
 {
-    public partial class dump : Migration
+    public partial class ICollection : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

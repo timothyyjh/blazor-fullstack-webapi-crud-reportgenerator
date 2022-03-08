@@ -98,11 +98,11 @@ using BlazorReportingTools.Models;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 84 "C:\Users\Timothy Yeo\source\repos\blazor-presoft\Pages\PRCreate.razor"
-           
-    ItemcodeQtyPriceModel newItemcodeQtyPriceModel = new ItemcodeQtyPriceModel();
+#line 88 "C:\Users\Timothy Yeo\source\repos\blazor-presoft\Pages\PRCreate.razor"
+       
+    PurchaseOrderModel newPurchaseOrderModel = new PurchaseOrderModel();
 
-    PRItemSelectModel newPRItemSelectModel = new PRItemSelectModel();
+    ItemListModel newItemListModel = new ItemListModel();
 
     SupplierModel newSupplier = new SupplierModel();
 
@@ -111,17 +111,23 @@ using BlazorReportingTools.Models;
     protected override async Task OnInitializedAsync()
     {
         await ePRService.GetSupplier();
-        await ePRService.GetItemcodeQtyPriceModel();
+        await ePRService.GetPurchaseOrderItemList();
     }
 
     private void HandleItemReferenceAdd()
     {
-        NavigationManager.NavigateTo("/PRItemSelector");
+        NavigationManager.NavigateTo("/AddItemToPO");
     }
 
     private void DeleteItem()
     {
-        ePRService.DeleteItemcodeQtyPriceModel(newItemcodeQtyPriceModel.Code);        
+        ePRService.DeletePurchaseOrderItemList(newItemListModel.Code);
+    }
+
+    private void HandleSave()
+    {
+        ePRService.CreatePurchaseOrderModel(newPurchaseOrderModel);
+        NavigationManager.NavigateTo("/purchaseorder");
     }
 
 #line default

@@ -1,18 +1,19 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Report xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner" xmlns:cl="http://schemas.microsoft.com/sqlserver/reporting/2010/01/componentdefinition" xmlns="http://schemas.microsoft.com/sqlserver/reporting/2010/01/reportdefinition">
-  <Description>Detail of an individual Adventure Works order. This report can be accessed as a drillthrough report from the Employee Sales Summary and Territory Sales drilldown report. This report illustrates the use of lists, tables, parameters, and expressions.</Description>
-  <AutoRefresh>0</AutoRefresh>
-  <DataSources>
-    <DataSource Name="AdventureWorks">
-      <ConnectionProperties>
-        <DataProvider>SQL</DataProvider>
-        <ConnectString>Data Source=dataplatformdemodata.syncfusoion.com;Initial Catalog=AdventureWorks;user id=demoreadonly@data-platform-demo;password=N@c)=Y8s*1&amp;dh</ConnectString>
-      </ConnectionProperties>
-      <rd:SecurityType>None</rd:SecurityType>
-      <rd:DataSourceID>25d3314c-0d4f-49cc-9c22-10194e825490</rd:DataSourceID>
-    </DataSource>
-  </DataSources>
-  <DataSets>
+	<Description>Detail of an individual Adventure Works order. This report can be accessed as a drillthrough report from the Employee Sales Summary and Territory Sales drilldown report. This report illustrates the use of lists, tables, parameters, and expressions.</Description>
+	<AutoRefresh>0</AutoRefresh>
+	<DataSources>
+		<DataSource Name="ReportDB">
+			<ConnectionProperties>
+				<DataProvider>SQL</DataProvider>
+				<ConnectString>Data Source=DESKTOP-HAPHHH3\A2006;Initial Catalog=ReportDB</ConnectString>
+			</ConnectionProperties>
+			<rd:SecurityType>None</rd:SecurityType>
+			<rd:DataSourceID>25d3314c-0d4f-49cc-9c22-10194e825490</rd:DataSourceID>
+		</DataSource>
+	</DataSources>
+</Report>
+  <!--<DataSets>
     <DataSet Name="SalesOrder">
       <Query>
         <DataSourceName>AdventureWorks</DataSourceName>
@@ -1733,4 +1734,4 @@ i/bvtuyV5PO8ry87jnGNx/nUPjT4ceH/ABxAp1GBo7xBiK8gwsqjrgnGGGex9TjFddRQB84al+zbq8cj
   <ConsumeContainerWhitespace>true</ConsumeContainerWhitespace>
   <rd:ReportUnitType>Inch</rd:ReportUnitType>
   <rd:ReportID>70650568-7dd4-4ef4-aeaa-67502de11b4f</rd:ReportID>
-</Report>
+</Report>-->

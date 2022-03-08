@@ -53,16 +53,8 @@ namespace BlazorReportingTools.Services
 
         public async Task UpdateSupplier(SupplierModel supplier)
         {
-            if (GetSupplierId(supplier.Code) == null)
-            {
-                await _http.PutAsJsonAsync($"http://localhost:51885/api/supplier/{supplier.Code}", supplier);
-                _navigationManager.NavigateTo("supplier");
-            }
-            else
-            {
-                _navigationManager.NavigateTo("supplier");
-                
-            }
+            await _http.PutAsJsonAsync($"http://localhost:51885/api/supplier/{supplier.Code}", supplier);
+            _navigationManager.NavigateTo("supplier");
         }
 
         // ITEM SERVICES
@@ -139,92 +131,73 @@ namespace BlazorReportingTools.Services
             _navigationManager.NavigateTo("budgetyear");
         }
 
-        // PRItemSelectModel Services
-        public List<PRItemSelectModel> PRItemSelectModels { get; set; } = new List<PRItemSelectModel>();
+        // PurchaseOrderModel Services
+        
+        public List<PurchaseOrderModel> PurchaseOrders { get; set; } = new List<PurchaseOrderModel>();
 
-        public async Task CreatePRItemSelectModel(PRItemSelectModel pritemselectmodel)
+        public async Task CreatePurchaseOrderModel(PurchaseOrderModel purchaseordermodel)
         {
-            var result = await _http.PostAsJsonAsync("http://localhost:51885/api/pritemselectmodel", pritemselectmodel);
-            _navigationManager.NavigateTo("pritemselectmodel");
-
+            var result = await _http.PostAsJsonAsync("http://localhost:51885/api/purchaseorder", purchaseordermodel);
         }
 
-        public async Task DeletePRItemSelectModel(int id)
+        public async Task DeletePurchaseOrderModel(int id)
         {
-            var result = await _http.DeleteAsync($"http://localhost:51885/api/pritemselectmodel/{id}");
-            _navigationManager.NavigateTo("pritemselectmodel");
+            var result = await _http.DeleteAsync($"http://localhost:51885/api/purchaseorder/{id}");            
         }
 
-        public async Task GetPRItemSelectModel()
+        public async Task GetPurchaseOrderModel()
         {
-            var result = await _http.GetFromJsonAsync<List<PRItemSelectModel>>("http://localhost:51885/api/pritemselectmodel");
+            var result = await _http.GetFromJsonAsync<List<PurchaseOrderModel>>("http://localhost:51885/api/purchaseorder");
             if (result != null)
-                PRItemSelectModels = result;
+                PurchaseOrders = result;
         }
 
-        public async Task<PRItemSelectModel> GetPRItemSelectModelId(int id)
+        public async Task<PurchaseOrderModel> GetPurchaseOrderModelId(int id)
         {
-            var result = await _http.GetFromJsonAsync<PRItemSelectModel>($"http://localhost:51885/api/pritemselectmodel/{id}");
+            var result = await _http.GetFromJsonAsync<PurchaseOrderModel>($"http://localhost:51885/api/purchaseorder/{id}");
             if (result != null)
                 return result;
-            throw new Exception("PRItemSelectModel Not Found");
+            throw new Exception("PurchaseOrderModel Not Found");
         }
 
-        public async Task UpdatePRItemSelectModel(PRItemSelectModel pritemselectmodel)
+        public async Task UpdatePurchaseOrderModel(PurchaseOrderModel purchaseordermodel)
         {
-            if (GetPRItemSelectModelId(pritemselectmodel.Code) == null)
-            {
-                await _http.PutAsJsonAsync($"http://localhost:51885/api/pritemselectmodel/{pritemselectmodel.Code}", pritemselectmodel);
-                _navigationManager.NavigateTo("pritemselectmodel");
-            }
-            else
-            {
-                _navigationManager.NavigateTo("pritemselectmodel");
-
-            }
+                await _http.PutAsJsonAsync($"http://localhost:51885/api/purchaseorder/{purchaseordermodel.Code}", purchaseordermodel);
         }
 
-        // ItemcodeQtyPriceModel Services
-        public List<ItemcodeQtyPriceModel> ItemcodeQtyPriceModels { get; set; } = new List<ItemcodeQtyPriceModel>();
+        // ItemListModel Services
+        public List<ItemListModel> PurchaseOrderItemLists { get; set; } = new List<ItemListModel>();
 
-        public async Task CreateItemcodeQtyPriceModel(ItemcodeQtyPriceModel itemcodeqtypricemodel)
+        public List<ItemListModel> ItemLists { get; set; } = new List<ItemListModel>();
+        
+        public async Task GetPurchaseOrderItemList()
         {
-            var result = await _http.PostAsJsonAsync("http://localhost:51885/api/itemcodeqtyprice", itemcodeqtypricemodel);
-            // _navigationManager.NavigateTo("itemcodeqtypricemodel");
-
-        }
-
-        public async Task DeleteItemcodeQtyPriceModel(int id)
-        {
-            var result = await _http.DeleteAsync($"http://localhost:51885/api/itemcodeqtyprice/{id}");            
-        }
-
-        public async Task GetItemcodeQtyPriceModel()
-        {
-            var result = await _http.GetFromJsonAsync<List<ItemcodeQtyPriceModel>>("http://localhost:51885/api/itemcodeqtyprice");
+            var result = await _http.GetFromJsonAsync<List<ItemListModel>>($"http://localhost:51885/api/purchaseorder/ItemList");
             if (result != null)
-                ItemcodeQtyPriceModels = result;
+                ItemLists = result;
         }
 
-        public async Task<ItemcodeQtyPriceModel> GetItemcodeQtyPriceModelId(int id)
+        public async Task<ItemListModel> GetPurchaseOrderItemListID(int id)
         {
-            var result = await _http.GetFromJsonAsync<ItemcodeQtyPriceModel>($"http://localhost:51885/api/itemcodeqtyprice/{id}");
+            var result = await _http.GetFromJsonAsync<ItemListModel>($"http://localhost:51885/api/purchaseorder/itemlist/{id}");
             if (result != null)
                 return result;
-            throw new Exception("ItemcodeQtyPriceModel Not Found");
+            throw new Exception("Item List Not Found");
         }
 
-        public async Task UpdateItemcodeQtyPriceModel(ItemcodeQtyPriceModel itemcodeqtypricemodel)
+        public async Task CreatePurchaseOrderItemList(ItemListModel itemlist)
         {
-            if (GetItemcodeQtyPriceModelId(itemcodeqtypricemodel.Code) == null)
-            {
-                await _http.PutAsJsonAsync($"http://localhost:51885/api/itemcodeqtyprice/{itemcodeqtypricemodel.Code}", itemcodeqtypricemodel);
-                _navigationManager.NavigateTo("itemcodeqtypricemodel");
-            }
-            else
-            {
-                _navigationManager.NavigateTo("itemcodeqtypricemodel");
-            }
+            var result = await _http.PostAsJsonAsync("http://localhost:51885/api/purchaseorder/itemlist", itemlist);           
+        }
+
+        public Task UpdatePurchaseOrderItemList(ItemListModel supplier)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task DeletePurchaseOrderItemList(int id)
+        {
+            throw new NotImplementedException();
         }
     }
 }

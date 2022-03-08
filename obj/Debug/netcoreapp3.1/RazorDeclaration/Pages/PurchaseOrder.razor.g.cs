@@ -89,8 +89,9 @@ using BlazorReportingTools.Models;
 #line default
 #line hidden
 #nullable disable
-    [Microsoft.AspNetCore.Components.RouteAttribute("/PRItemSelector")]
-    public partial class PRItemSelector : Microsoft.AspNetCore.Components.ComponentBase
+    [Microsoft.AspNetCore.Components.RouteAttribute("/")]
+    [Microsoft.AspNetCore.Components.RouteAttribute("/PurchaseOrder")]
+    public partial class PurchaseOrder : Microsoft.AspNetCore.Components.ComponentBase
     {
         #pragma warning disable 1998
         protected override void BuildRenderTree(Microsoft.AspNetCore.Components.Rendering.RenderTreeBuilder __builder)
@@ -98,20 +99,29 @@ using BlazorReportingTools.Models;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 45 "C:\Users\Timothy Yeo\source\repos\blazor-presoft\Pages\PRItemSelector.razor"
+#line 48 "C:\Users\Timothy Yeo\source\repos\blazor-presoft\Pages\PurchaseOrder.razor"
        
-    ItemcodeQtyPriceModel newItemcodeQtyPriceModel = new ItemcodeQtyPriceModel();
 
     protected override async Task OnInitializedAsync()
     {
-        await ePRService.GetItem();
+        await ePRService.GetPurchaseOrderModel();
+        await ePRService.GetPurchaseOrderItemList();
     }
 
-    async Task HandleSubmit()
+    private void AddPR()
     {
-        await ePRService.CreateItemcodeQtyPriceModel(newItemcodeQtyPriceModel);
-        NavigationManager.NavigateTo("/prcreate");
+        NavigationManager.NavigateTo("/PRCreate");
     }
+
+    private void ViewPR(int id)
+    {
+        NavigationManager.NavigateTo($"/ViewPR/{id}");
+    }
+
+    //async Task DeletePR()
+    //{
+    //    //await ePRService.DeletePurchaseOrderModel();
+    //}
 
 #line default
 #line hidden

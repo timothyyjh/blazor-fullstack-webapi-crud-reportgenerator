@@ -1,13 +1,12 @@
-﻿@page "/PRItemSelector"
+﻿@page "/ItemList/{id:int}"
 @inject IePRService ePRService
 @inject NavigationManager NavigationManager
 
-<h3>Item Selector</h3>
-
+<h3>Item Selector for Purchase Order [Code: @newPurchaseOrderModel.Code ]</h3>
 
 <body>
-    <EditForm Model="newItemcodeQtyPriceModel">
-        <div>            
+    <EditForm Model="newItemListModel">
+        <div>
             <table class="table table-borderless table-striped table-hover">
                 <thead class="thead-dark">
                     <tr>
@@ -20,7 +19,7 @@
                 <tbody>
                     <tr>
                         <td>
-                            <InputSelectNumber id="codeselect" @bind-Value="newItemcodeQtyPriceModel.Code" class="form-control">
+                            <InputSelectNumber id="codeselect" @bind-Value="newItemListModel.Code" class="form-control">
                                 @foreach (var item in ePRService.Items)
                                 {
                                     <option value="@item.Code">@item.Code</option>
@@ -28,22 +27,33 @@
                             </InputSelectNumber>
                         </td>
                         <td>
-                            <InputNumber id="qtyselect" @bind-Value="newItemcodeQtyPriceModel.Qty" class="form-control" />
+                            <InputNumber id="qtyselect" @bind-Value="newItemListModel.Qty" class="form-control" />
                         </td>
                         <td>
-                            <InputNumber id="priceselect" @bind-Value="newItemcodeQtyPriceModel.Price" class="form-control" />
-                        </td>                        
+                            <InputNumber id="priceselect" @bind-Value="newItemListModel.Price" class="form-control" />
+                        </td>
                     </tr>
                 </tbody>
             </table>
             <button id="addbutton" class="btn btn-success mb-3 rounded-pill" @onclick="HandleSubmit"><i class="oi oi-check"></i></button>
+            <button id="cancelbutton" class="btn btn-warning mb-3 rounded-pill" @onclick="Cancel">Cancel</button>
         </div>
     </EditForm>
 </body>
 
 
 @code {
-    ItemcodeQtyPriceModel newItemcodeQtyPriceModel = new ItemcodeQtyPriceModel();
+    [Parameter]
+    public int? Id { get; set; }
+
+    //protected override async Task OnParametersSetAsync()
+    //{
+    //    newItemListModel = await ePRService.GetPurchaseOrderItemListID((int)Id);
+    //}
+
+    ItemListModel newItemListModel = new ItemListModel();
+
+    PurchaseOrderModel newPurchaseOrderModel = new PurchaseOrderModel();
 
     protected override async Task OnInitializedAsync()
     {
@@ -52,7 +62,12 @@
 
     async Task HandleSubmit()
     {
-        await ePRService.CreateItemcodeQtyPriceModel(newItemcodeQtyPriceModel);
-        NavigationManager.NavigateTo("/prcreate");
+        await ePRService.CreatePurchaseOrderItemList(newItemListModel);
+        NavigationManager.NavigateTo($"/ViewPR/{Id}");
+    }
+
+    private void Cancel()
+    {
+        NavigationManager.NavigateTo($"/ViewPR/{Id}");
     }
 }

@@ -7,11 +7,14 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
 namespace BlazorReportingTools.Models
-{   
-    public class ItemcodeQtyPriceModel
+{      
+    public class ItemListModel
     {
-        [ForeignKey("PRItemSelectModel")]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public ItemListModel() { }
+
+        [Key]
+        public int Id { get; set; }
+
         [Required]
         public int Code { get; set; }
 
@@ -19,6 +22,6 @@ namespace BlazorReportingTools.Models
         public int Qty { get; set; }
 
         [Required]
-        public int Price{ get; set; }     
+        public int Price { get; set; }        
     }
 }

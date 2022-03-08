@@ -8,13 +8,17 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BlazorReportingTools.Models
 {   
-    public class PRItemSelectModel
-    {
+    public class PurchaseOrderModel
+    {        
+
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         [Required]
         public int Code { get; set; }
 
+        [Required]
+        public ICollection<ItemListModel> ItemList { get; set; }
+        
         [Required]
         public string Name { get; set; }
 
@@ -24,11 +28,7 @@ namespace BlazorReportingTools.Models
         public int DocNumber { get; set; }
         
         [Required]
-        public string Supplier { get; set; }
-
-        [Required]
-        public string Item { get; set; }
-
+        public int Supplier { get; set; }        
 
         [Required]
         public string AddressLine1 { get; set; }
@@ -40,6 +40,6 @@ namespace BlazorReportingTools.Models
         public string AddressLine3 { get; set; }
 
         [Required]
-        public string AddressLine4 { get; set; }      
+        public string AddressLine4 { get; set; }        
     }
 }
