@@ -5,13 +5,14 @@
 <h3>Edit Purchase Order [Code: @newPurchaseOrderModel.Code]</h3>
 
 <body>
-    <EditForm Model="newPurchaseOrderModel">
+    <EditForm Model="newPurchaseOrderModel" OnValidSubmit="HandleSave">
         <div>
             <DataAnnotationsValidator />
             <ValidationSummary />
             <table class="table table-bordered table-striped table-hover">
                 <thead class="thead-dark">
                     <tr>
+                        <th>Code:</th>
                         <th>Date:</th>
                         <th>Name:</th>
                         <th>Doc No:</th>
@@ -21,6 +22,10 @@
                 </thead>
                 <tbody>
                     <tr>
+                        <td>
+                            <label for="code"></label>
+                            <InputNumber id="numberinput" class="form-control" @bind-Value="newPurchaseOrderModel.Code" />
+                        </td>
                         <td>
                             <label for="date"></label>
                             <InputDate id="dateinput" class="form-control" @bind-Value="newPurchaseOrderModel.Date" />
@@ -35,12 +40,12 @@
                         </td>
                         <td>
                             <label for="supplier"></label>
-                            <InputSelect id="supplierselect" @bind-Value="newPurchaseOrderModel.Supplier" class="form-control">
+                            <InputSelectNumber id="supplierselect" @bind-Value="newPurchaseOrderModel.Supplier" class="form-control">
                                 @foreach (var supplier in ePRService.Suppliers)
                                 {
-                                <option value="@supplier.Code">@supplier.Code</option>
+                                    <option value="@supplier.Code">@supplier.Code</option>
                                 }
-                            </InputSelect>
+                            </InputSelectNumber>
                         </td>
                         <td>
                             <label for="address"></label>
@@ -56,7 +61,8 @@
 
         </div>
             
-        <button class="btn btn-primary mb-3 rounded-pill" @onclick="HandleItemReferenceAdd"><i class="oi oi-plus"></i></button>
+        
+        <button class="btn btn-primary mb-3 rounded-pill" @onclick="(() => HandleItemReferenceAdd())"><i class="oi oi-plus"></i></button>
         <table class="table table-borderless table-striped table-hover">
             <thead class="thead-dark">
                 <tr>
@@ -67,18 +73,19 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var item in ePRService.ItemLists)
-                    {
-                <tr>
-                    <td>@item.Code</td>
-                    <td>@item.Qty</td>
-                    <td>@item.Price</td>
-                    <td><button class="btn btn-danger rounded-pill" @onclick="DeleteItem"><i class="oi oi-minus"></i></button></td>
-                </tr>
-                    }
+                @foreach (var item in ePRService.ItemLists.Where(x => x.POCode == Id))
+                {
+                    <tr>
+                        <td>@item.Code</td>
+                        <td>@item.Qty</td>
+                        <td>@item.Price</td>
+                        <td><button class="btn btn-danger rounded-pill" @onclick="DeleteItem"><i class="oi oi-minus"></i></button></td>
+                    </tr>
+                }
             </tbody>
         </table>
-        <button class="btn btn-success mb-3" @onclick="HandleSave">Save</button>
+        <button class="btn btn-success mb-3" type="submit">Save</button>
+        <button class="btn btn-warning mb-3" @onclick="Cancel">Cancel</button>
     </EditForm>
 </body>
 
@@ -90,8 +97,7 @@
     protected override async Task OnParametersSetAsync()
     {
         newPurchaseOrderModel = await ePRService.GetPurchaseOrderModelId((int)Id);
-        //newItemListModel = await ePRService.GetPurchaseOrderItemListID((int)Id);
-    }
+    }    
 
     ItemListModel newItemListModel = new ItemListModel();
 
@@ -109,12 +115,17 @@
 
     private void HandleItemReferenceAdd()
     {
-        NavigationManager.NavigateTo($"/ItemList/{newPurchaseOrderModel.Code}");
+        NavigationManager.NavigateTo($"/ItemList/{Id}");
     }
 
     private void DeleteItem()
     {
         ePRService.DeletePurchaseOrderItemList(newItemListModel.Code);
+    }
+
+    private void Cancel()
+    {
+        NavigationManager.NavigateTo("/purchaseorder");
     }
 
     async Task HandleSave()

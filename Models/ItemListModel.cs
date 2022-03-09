@@ -22,6 +22,11 @@ namespace BlazorReportingTools.Models
         public int Qty { get; set; }
 
         [Required]
-        public int Price { get; set; }        
+        public int Price { get; set; }
+
+        //FOREIGN KEY
+        [ForeignKey("PurchaseOrderModel")]
+        public int POCode { get; set; }
+        public PurchaseOrderModel PurchaseOrderModel { get; set; }
     }
 }

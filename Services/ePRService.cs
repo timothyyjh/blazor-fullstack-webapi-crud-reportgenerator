@@ -172,14 +172,14 @@ namespace BlazorReportingTools.Services
         
         public async Task GetPurchaseOrderItemList()
         {
-            var result = await _http.GetFromJsonAsync<List<ItemListModel>>($"http://localhost:51885/api/purchaseorder/ItemList");
+            var result = await _http.GetFromJsonAsync<List<ItemListModel>>($"http://localhost:51885/api/itemlist");
             if (result != null)
                 ItemLists = result;
         }
 
         public async Task<ItemListModel> GetPurchaseOrderItemListID(int id)
         {
-            var result = await _http.GetFromJsonAsync<ItemListModel>($"http://localhost:51885/api/purchaseorder/itemlist/{id}");
+            var result = await _http.GetFromJsonAsync<ItemListModel>($"http://localhost:51885/api/itemlist/{id}");
             if (result != null)
                 return result;
             throw new Exception("Item List Not Found");
@@ -187,7 +187,7 @@ namespace BlazorReportingTools.Services
 
         public async Task CreatePurchaseOrderItemList(ItemListModel itemlist)
         {
-            var result = await _http.PostAsJsonAsync("http://localhost:51885/api/purchaseorder/itemlist", itemlist);           
+            var result = await _http.PostAsJsonAsync("http://localhost:51885/api/itemlist", itemlist);           
         }
 
         public Task UpdatePurchaseOrderItemList(ItemListModel supplier)

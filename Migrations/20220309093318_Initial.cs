@@ -78,23 +78,23 @@ namespace BlazorReportingTools.Migrations
                     Code = table.Column<int>(nullable: false),
                     Qty = table.Column<int>(nullable: false),
                     Price = table.Column<int>(nullable: false),
-                    PurchaseOrderModelCode = table.Column<int>(nullable: true)
+                    POCode = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ItemLists", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ItemLists_PurchaseOrders_PurchaseOrderModelCode",
-                        column: x => x.PurchaseOrderModelCode,
+                        name: "FK_ItemLists_PurchaseOrders_POCode",
+                        column: x => x.POCode,
                         principalTable: "PurchaseOrders",
                         principalColumn: "Code",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_ItemLists_PurchaseOrderModelCode",
+                name: "IX_ItemLists_POCode",
                 table: "ItemLists",
-                column: "PurchaseOrderModelCode");
+                column: "POCode");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BlazorReportingTools.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20220308090830_ICollection")]
-    partial class ICollection
+    [Migration("20220309093318_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -45,10 +45,10 @@ namespace BlazorReportingTools.Migrations
                     b.Property<int>("Code")
                         .HasColumnType("int");
 
-                    b.Property<int>("Price")
+                    b.Property<int>("POCode")
                         .HasColumnType("int");
 
-                    b.Property<int?>("PurchaseOrderModelCode")
+                    b.Property<int>("Price")
                         .HasColumnType("int");
 
                     b.Property<int>("Qty")
@@ -56,7 +56,7 @@ namespace BlazorReportingTools.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PurchaseOrderModelCode");
+                    b.HasIndex("POCode");
 
                     b.ToTable("ItemLists");
                 });
@@ -155,9 +155,11 @@ namespace BlazorReportingTools.Migrations
 
             modelBuilder.Entity("BlazorReportingTools.Models.ItemListModel", b =>
                 {
-                    b.HasOne("BlazorReportingTools.Models.PurchaseOrderModel", null)
-                        .WithMany("ItemList")
-                        .HasForeignKey("PurchaseOrderModelCode");
+                    b.HasOne("BlazorReportingTools.Models.PurchaseOrderModel", "PurchaseOrderModel")
+                        .WithMany()
+                        .HasForeignKey("POCode")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

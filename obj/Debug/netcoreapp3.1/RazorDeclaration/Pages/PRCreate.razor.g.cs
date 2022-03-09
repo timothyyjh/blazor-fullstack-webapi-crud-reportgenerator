@@ -98,13 +98,9 @@ using BlazorReportingTools.Models;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 88 "C:\Users\Timothy Yeo\source\repos\blazor-presoft\Pages\PRCreate.razor"
+#line 68 "C:\Users\Timothy Yeo\source\repos\blazor-presoft\Pages\PRCreate.razor"
        
     PurchaseOrderModel newPurchaseOrderModel = new PurchaseOrderModel();
-
-    ItemListModel newItemListModel = new ItemListModel();
-
-    SupplierModel newSupplier = new SupplierModel();
 
     ItemModel newItem = new ItemModel();
 
@@ -114,19 +110,14 @@ using BlazorReportingTools.Models;
         await ePRService.GetPurchaseOrderItemList();
     }
 
-    private void HandleItemReferenceAdd()
-    {
-        NavigationManager.NavigateTo("/AddItemToPO");
-    }
-
-    private void DeleteItem()
-    {
-        ePRService.DeletePurchaseOrderItemList(newItemListModel.Code);
-    }
-
     private void HandleSave()
     {
         ePRService.CreatePurchaseOrderModel(newPurchaseOrderModel);
+        NavigationManager.NavigateTo("/purchaseorder");
+    }
+
+    private void Cancel()
+    {
         NavigationManager.NavigateTo("/purchaseorder");
     }
 

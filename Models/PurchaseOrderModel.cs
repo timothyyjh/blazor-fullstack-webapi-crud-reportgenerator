@@ -15,13 +15,11 @@ namespace BlazorReportingTools.Models
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         [Required]
         public int Code { get; set; }
-
-        [Required]
-        public ICollection<ItemListModel> ItemList { get; set; }
         
         [Required]
         public string Name { get; set; }
-
+        
+        [Required]
         public DateTime Date { get; set; } = DateTime.Now;
         
         [Required]

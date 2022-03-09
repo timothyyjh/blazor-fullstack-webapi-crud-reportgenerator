@@ -10,87 +10,63 @@
             <DataAnnotationsValidator />
             <ValidationSummary />
             <table class="table table-bordered table-striped table-hover">
-            <thead class="thead-dark">
-                <tr>
-                    <th>Code:</th>
-                    <th>Date:</th>
-                    <th>Name:</th>
-                    <th>Doc No:</th>
-                    <th>Supplier:</th>
-                    <th>Address Line</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>
-                        <label for="code"></label>
-                        <InputNumber id="codeinput" class="form-control" @bind-Value="newPurchaseOrderModel.Code" />
-                    </td>
-                    <td>
-                        <label for="date"></label>
-                        <InputDate id="dateinput" class="form-control" @bind-Value="newPurchaseOrderModel.Date" />
-                    </td>
-                    <td>
-                        <label for="name" />
-                        <InputText id="nameinput" class="form-control" @bind-Value="newPurchaseOrderModel.Name" />
-                    </td>
-                    <td>
-                        <label for="docno"></label>
-                        <InputNumber id="numberinput" class="form-control" @bind-Value="newPurchaseOrderModel.DocNumber" />
-                    </td>
-                    <td>
-                        <label for="supplier"></label>
-                        <InputSelectNumber id="supplierselect" @bind-Value="newPurchaseOrderModel.Supplier" class="form-control">
-                            @foreach (var supplier in ePRService.Suppliers)
-                            {
-                                <option value="@supplier.Code">@supplier.Code</option>
-                            }
-                        </InputSelectNumber>
-                    </td>
-                    <td>
-                        <label for="address"></label>
-                        <InputText id="addressinput" placeholder="Address Line 1" @bind-Value="newPurchaseOrderModel.AddressLine1" class="form-control" />
-                        <InputText id="addressinput" placeholder="Address Line 2" @bind-Value="newPurchaseOrderModel.AddressLine2" class="form-control" />
-                        <InputText id="addressinput" placeholder="Address Line 3" @bind-Value="newPurchaseOrderModel.AddressLine3" class="form-control" />
-                        <InputText id="addressinput" placeholder="Address Line 4" @bind-Value="newPurchaseOrderModel.AddressLine4" class="form-control" />
-                    </td>
-                </tr>            
-            </tbody>
-            </table>            
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Code:</th>
+                        <th>Date:</th>
+                        <th>Name:</th>
+                        <th>Doc No:</th>
+                        <th>Supplier:</th>
+                        <th>Address Line</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <label for="code"></label>
+                            <InputNumber id="codeinput" class="form-control" @bind-Value="newPurchaseOrderModel.Code" />
+                        </td>
+                        <td>
+                            <label for="date"></label>
+                            <InputDate id="dateinput" class="form-control" @bind-Value="newPurchaseOrderModel.Date" />
+                        </td>
+                        <td>
+                            <label for="name" />
+                            <InputText id="nameinput" class="form-control" @bind-Value="newPurchaseOrderModel.Name" />
+                        </td>
+                        <td>
+                            <label for="docno"></label>
+                            <InputNumber id="numberinput" class="form-control" @bind-Value="newPurchaseOrderModel.DocNumber" />
+                        </td>
+                        <td>
+                            <label for="supplier"></label>
+                            <InputSelectNumber id="supplierselect" @bind-Value="newPurchaseOrderModel.Supplier" class="form-control">
+                                @foreach (var supplier in ePRService.Suppliers)
+                                {
+                                    <option value="@supplier.Code">@supplier.Code</option>
+                                }
+                            </InputSelectNumber>
+                        </td>
+                        <td>
+                            <label for="address"></label>
+                            <InputText id="addressinput" placeholder="Address Line 1" @bind-Value="newPurchaseOrderModel.AddressLine1" class="form-control" />
+                            <InputText id="addressinput" placeholder="Address Line 2" @bind-Value="newPurchaseOrderModel.AddressLine2" class="form-control" />
+                            <InputText id="addressinput" placeholder="Address Line 3" @bind-Value="newPurchaseOrderModel.AddressLine3" class="form-control" />
+                            <InputText id="addressinput" placeholder="Address Line 4" @bind-Value="newPurchaseOrderModel.AddressLine4" class="form-control" />
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
             <br />
 
         </div>
-        
-        <button class="btn btn-primary mb-3 rounded-pill" @onclick="HandleItemReferenceAdd"><i class="oi oi-plus"></i></button>
-        <table class="table table-borderless table-striped table-hover">
-            <thead class="thead-dark">
-                <tr>
-                    <th>Code</th>
-                    <th>Qty</th>
-                    <th>Price</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in ePRService.ItemLists)
-	            {
-                    <tr>
-                        <td>@item.Code</td>
-                        <td>@item.Qty</td>
-                        <td>@item.Price</td>
-                    </tr>		 
-	            }
-            </tbody>
-        </table>
-    <button class="btn btn-success mb-3" type="submit">Save</button>    
+        <button class="btn btn-success mb-3" type="submit">Save</button>
+        <button class="btn btn-warning mb-3" @onclick="Cancel">Cancel</button>
     </EditForm>
 </body>
 
 @code {
     PurchaseOrderModel newPurchaseOrderModel = new PurchaseOrderModel();
-
-    ItemListModel newItemListModel = new ItemListModel();
-
-    SupplierModel newSupplier = new SupplierModel();
 
     ItemModel newItem = new ItemModel();
 
@@ -100,19 +76,14 @@
         await ePRService.GetPurchaseOrderItemList();
     }
 
-    private void HandleItemReferenceAdd()
-    {
-        NavigationManager.NavigateTo("/AddItemToPO");
-    }
-
-    private void DeleteItem()
-    {
-        ePRService.DeletePurchaseOrderItemList(newItemListModel.Code);
-    }
-
     private void HandleSave()
     {
         ePRService.CreatePurchaseOrderModel(newPurchaseOrderModel);
+        NavigationManager.NavigateTo("/purchaseorder");
+    }
+
+    private void Cancel()
+    {
         NavigationManager.NavigateTo("/purchaseorder");
     }
 }

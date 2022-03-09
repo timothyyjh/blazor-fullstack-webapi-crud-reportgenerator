@@ -89,7 +89,7 @@ using BlazorReportingTools.Models;
 #line default
 #line hidden
 #nullable disable
-    [Microsoft.AspNetCore.Components.RouteAttribute("/AddItemToPO")]
+    [Microsoft.AspNetCore.Components.RouteAttribute("/AddItemToPO/{id:int}")]
     public partial class AddItemToPO : Microsoft.AspNetCore.Components.ComponentBase
     {
         #pragma warning disable 1998
@@ -100,10 +100,16 @@ using BlazorReportingTools.Models;
 #nullable restore
 #line 36 "C:\Users\Timothy Yeo\source\repos\blazor-presoft\Pages\AddItemToPO.razor"
        
+    [Parameter]
+    public int? Id { get; set; }
 
     ItemListModel _itemListModel = new ItemListModel();
-
     PurchaseOrderModel _purchaseOrderModel = new PurchaseOrderModel();
+
+    protected override async Task OnParametersSetAsync()
+    {     
+        _itemListModel = await ePRService.GetPurchaseOrderItemListID((int)Id);
+    }
 
     protected override async Task OnInitializedAsync()
     {
@@ -111,7 +117,7 @@ using BlazorReportingTools.Models;
     }
 
     private void HandleSubmit()
-    {        
+    {
         ePRService.CreatePurchaseOrderItemList(_itemListModel);
         NavigationManager.NavigateTo("/prcreate");
     }

@@ -98,7 +98,7 @@ using BlazorReportingTools.Models;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 86 "C:\Users\Timothy Yeo\source\repos\blazor-presoft\Pages\PRViewEdit.razor"
+#line 93 "C:\Users\Timothy Yeo\source\repos\blazor-presoft\Pages\PRViewEdit.razor"
        
     [Parameter]
     public int? Id { get; set; }
@@ -106,8 +106,7 @@ using BlazorReportingTools.Models;
     protected override async Task OnParametersSetAsync()
     {
         newPurchaseOrderModel = await ePRService.GetPurchaseOrderModelId((int)Id);
-        //newItemListModel = await ePRService.GetPurchaseOrderItemListID((int)Id);
-    }
+    }    
 
     ItemListModel newItemListModel = new ItemListModel();
 
@@ -125,12 +124,17 @@ using BlazorReportingTools.Models;
 
     private void HandleItemReferenceAdd()
     {
-        NavigationManager.NavigateTo($"/ItemList/{newPurchaseOrderModel.Code}");
+        NavigationManager.NavigateTo($"/ItemList/{Id}");
     }
 
     private void DeleteItem()
     {
         ePRService.DeletePurchaseOrderItemList(newItemListModel.Code);
+    }
+
+    private void Cancel()
+    {
+        NavigationManager.NavigateTo("/purchaseorder");
     }
 
     async Task HandleSave()

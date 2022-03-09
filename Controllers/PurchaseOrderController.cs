@@ -29,8 +29,6 @@ namespace BlazorReportingTools.Controllers
             return Ok(entity);
         }
 
-
-
         [HttpGet("{id}")]
         public async Task<ActionResult<List<PurchaseOrderModel>>> GetPurchaseOrderId(int id)
         {
@@ -84,34 +82,6 @@ namespace BlazorReportingTools.Controllers
 
             return Ok(await GetPurchaseOrder());
         }
-
-        // ITEMLIST CONTROLLER
-
-        [HttpGet("ItemList")]
-        public async Task<ActionResult<List<PurchaseOrderModel>>> GetPurchaseOrderItemList()
-        {
-            var entity = await _appDbContext.ItemLists.ToListAsync();
-            return Ok(entity);
-        }
-
-        //[HttpGet("ItemList/{id}")]
-        //public async Task<ActionResult<List<PurchaseOrderModel>>> GetPurchaseOrderItemListID(int id)
-        //{
-        //    var entity = await _appDbContext.ItemLists.LoadAsync(e => e.Code == id);
-        //    if (entity == null)
-        //        return NotFound("Sorry, ItemList not found.");
-        //    return Ok(entity);
-        //}
-
-        [HttpPost]
-        public async Task<ActionResult<List<PurchaseOrderModel>>> CreatePurchaseOrderItemList(ItemListModel entity)
-        {
-            _appDbContext.PurchaseOrders.ItemList.Add(entity);
-            await _appDbContext.SaveChangesAsync();
-
-            return Ok(await GetPurchaseOrderItemList());
-        }
-        dc
-
     }
 }
+
