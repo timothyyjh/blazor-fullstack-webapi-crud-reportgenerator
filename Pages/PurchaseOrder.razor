@@ -38,7 +38,7 @@
                 <td>@item.AddressLine3</td>
                 <td>@item.AddressLine4</td>
                 <td><button class="btn btn-primary m-3" @onclick="(() => ViewPR(item.Code))">PR + PRdtl</button></td>
-                <td><button class="btn btn-danger m-3"><i class="oi oi-trash"></i></button></td>
+                <td><button class="btn btn-danger m-3" @onclick="() => DeletePR(item.Code)"><i class="oi oi-trash"></i></button></td>
                 <td><button class="btn btn-warning m-3">Report <i class="oi oi-print"></i></button></td>
             </tr>
         }
@@ -50,7 +50,7 @@
     protected override async Task OnInitializedAsync()
     {
         await ePRService.GetPurchaseOrderModel();
-        await ePRService.GetPurchaseOrderItemList();        
+        await ePRService.GetPurchaseOrderItemList();
     }
 
     private void AddPR()
@@ -61,5 +61,14 @@
     private void ViewPR(int id)
     {
         NavigationManager.NavigateTo($"/ViewPR/{id}");
-    }   
+    }
+
+    async Task DeletePR(int id)
+    {
+        await ePRService.DeletePurchaseOrderModel(id);
+        await ePRService.DeletePurchaseOrderItemList(id);
+
+        NavigationManager.NavigateTo("/purchaseorder", true);
+
+    }
 }

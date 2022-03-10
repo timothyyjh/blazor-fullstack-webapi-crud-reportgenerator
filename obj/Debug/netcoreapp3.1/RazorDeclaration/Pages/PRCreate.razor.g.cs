@@ -98,10 +98,9 @@ using BlazorReportingTools.Models;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 68 "C:\Users\Timothy Yeo\source\repos\blazor-presoft\Pages\PRCreate.razor"
+#line 69 "C:\Users\Timothy Yeo\source\repos\blazor-presoft\Pages\PRCreate.razor"
        
     PurchaseOrderModel newPurchaseOrderModel = new PurchaseOrderModel();
-
     ItemModel newItem = new ItemModel();
 
     protected override async Task OnInitializedAsync()
@@ -113,7 +112,7 @@ using BlazorReportingTools.Models;
     private void HandleSave()
     {
         ePRService.CreatePurchaseOrderModel(newPurchaseOrderModel);
-        NavigationManager.NavigateTo("/purchaseorder");
+        NavigationManager.NavigateTo("/purchaseorder", true);
     }
 
     private void Cancel()

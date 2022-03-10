@@ -12,16 +12,19 @@ namespace BlazorReportingTools.Models
     {
         public ItemListModel() { }
 
-        [Key]
+        [Key]       
         public int Id { get; set; }
 
         [Required]
+        [Range(1, int.MaxValue, ErrorMessage = "Please enter a {0}")]
         public int Code { get; set; }
 
         [Required]
+        [Range(1, int.MaxValue, ErrorMessage = "Please enter a {0}")]
         public int Qty { get; set; }
 
         [Required]
+        [Range(1, int.MaxValue, ErrorMessage = "Please enter a {0}")]
         public int Price { get; set; }
 
         //FOREIGN KEY

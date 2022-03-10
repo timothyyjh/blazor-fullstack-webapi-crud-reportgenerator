@@ -48,5 +48,18 @@ namespace BlazorReportingTools.Controllers
 
             return Ok(await GetItemList());
         }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<List<ItemListModel>>> DeleteItemList(int id)
+        {
+            var dbEntity = await _appDbContext.ItemLists.FirstOrDefaultAsync(e => e.Id == id);
+            if (dbEntity == null)
+                return NotFound("Sorry, Item List not found.");
+
+            _appDbContext.ItemLists.Remove(dbEntity);
+            await _appDbContext.SaveChangesAsync();
+
+            return Ok(await GetItemList());
+        }
     }
 }

@@ -5,12 +5,14 @@
 <h3>Item Selector for Purchase Order [Code: @newPurchaseOrderModel.Code ]</h3>
 
 <body>
-    <EditForm Model="newItemListModel">
+    <EditForm Model="newItemListModel" OnValidSubmit="HandleSubmit">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
         <div>
             <table class="table table-borderless table-striped table-hover">
                 <thead class="thead-dark">
-                    <tr>              
-                        <th></th>
+                    <tr>
+                        <th>Page ID bind to POCode</th>
                         <th>Item Code</th>
                         <th>Qty</th>
                         <th>Price</th>
@@ -20,15 +22,17 @@
                 <tbody>
                     <tr>
                         <td>
+                            @* STILL INCOMPLETE- bind page ID with POcode of itemlist *@
                             <InputSelectNumber @bind-Value="newItemListModel.POCode" class="form-control">
                                 <option value="@Id">@Id</option>
-                            </InputSelectNumber>                            
+                            </InputSelectNumber>
                         </td>
 
                         <td>
                             <InputSelectNumber id="codeselect" @bind-Value="newItemListModel.Code" class="form-control">
                                 @foreach (var item in ePRService.Items)
                                 {
+                                    <option value="" selected disabled hidden></option>
                                     <option value="@item.Code">@item.Code</option>
                                 }
                             </InputSelectNumber>
@@ -42,7 +46,7 @@
                     </tr>
                 </tbody>
             </table>
-            <button id="addbutton" class="btn btn-success mb-3 rounded-pill" @onclick="HandleSubmit"><i class="oi oi-check"></i></button>
+            <button id="addbutton" class="btn btn-success mb-3 rounded-pill" type="submit"><i class="oi oi-check"></i></button>
             <button id="cancelbutton" class="btn btn-warning mb-3 rounded-pill" @onclick="Cancel">Cancel</button>
         </div>
     </EditForm>
@@ -59,22 +63,22 @@
     protected override async Task OnParametersSetAsync()
     {
         newPurchaseOrderModel = await ePRService.GetPurchaseOrderModelId((int)Id);
-        newItemListModel = await ePRService.GetPurchaseOrderItemListID((int)Id);
+        // newItemListModel = await ePRService.GetPurchaseOrderItemListID((int)Id);
     }
 
     protected override async Task OnInitializedAsync()
     {
-        await ePRService.GetItem();        
+        await ePRService.GetItem();
     }
 
     async Task HandleSubmit()
-    {    
+    {
         await ePRService.CreatePurchaseOrderItemList(newItemListModel);
         NavigationManager.NavigateTo($"/ViewPR/{Id}");
     }
 
     private void Cancel()
     {
-    NavigationManager.NavigateTo($"/ViewPR/{Id}");
+        NavigationManager.NavigateTo($"/ViewPR/{Id}");
     }
 }

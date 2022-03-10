@@ -195,9 +195,9 @@ namespace BlazorReportingTools.Services
             throw new NotImplementedException();
         }
 
-        public Task DeletePurchaseOrderItemList(int id)
+        public async Task DeletePurchaseOrderItemList(int id)
         {
-            throw new NotImplementedException();
+            await _http.DeleteAsync($"http://localhost:51885/api/itemlist/{id}");
         }
     }
 }

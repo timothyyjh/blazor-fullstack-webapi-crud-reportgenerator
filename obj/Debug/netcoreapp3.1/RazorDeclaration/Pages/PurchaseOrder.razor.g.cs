@@ -105,7 +105,7 @@ using BlazorReportingTools.Models;
     protected override async Task OnInitializedAsync()
     {
         await ePRService.GetPurchaseOrderModel();
-        await ePRService.GetPurchaseOrderItemList();        
+        await ePRService.GetPurchaseOrderItemList();
     }
 
     private void AddPR()
@@ -116,7 +116,16 @@ using BlazorReportingTools.Models;
     private void ViewPR(int id)
     {
         NavigationManager.NavigateTo($"/ViewPR/{id}");
-    }   
+    }
+
+    async Task DeletePR(int id)
+    {
+        await ePRService.DeletePurchaseOrderModel(id);
+        await ePRService.DeletePurchaseOrderItemList(id);
+
+        NavigationManager.NavigateTo("/purchaseorder", true);
+
+    }
 
 #line default
 #line hidden

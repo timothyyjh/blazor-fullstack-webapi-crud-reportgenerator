@@ -42,7 +42,8 @@
                             <label for="supplier"></label>
                             <InputSelectNumber id="supplierselect" @bind-Value="newPurchaseOrderModel.Supplier" class="form-control">
                                 @foreach (var supplier in ePRService.Suppliers)
-                                {
+                                {                                    
+                                    <option value="" selected disabled hidden></option>
                                     <option value="@supplier.Code">@supplier.Code</option>
                                 }
                             </InputSelectNumber>
@@ -67,7 +68,6 @@
 
 @code {
     PurchaseOrderModel newPurchaseOrderModel = new PurchaseOrderModel();
-
     ItemModel newItem = new ItemModel();
 
     protected override async Task OnInitializedAsync()
@@ -79,7 +79,7 @@
     private void HandleSave()
     {
         ePRService.CreatePurchaseOrderModel(newPurchaseOrderModel);
-        NavigationManager.NavigateTo("/purchaseorder");
+        NavigationManager.NavigateTo("/purchaseorder", true);
     }
 
     private void Cancel()

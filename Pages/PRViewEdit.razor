@@ -24,7 +24,8 @@
                     <tr>
                         <td>
                             <label for="code"></label>
-                            <InputNumber id="numberinput" class="form-control" @bind-Value="newPurchaseOrderModel.Code" />
+                            <input id="codeinput" readonly class="form-control" @bind-value="@newPurchaseOrderModel.Code"/>
+                            @*<InputNumber id="codeinput" class="form-control" @bind-Value="newPurchaseOrderModel.Code" />*@
                         </td>
                         <td>
                             <label for="date"></label>
@@ -62,10 +63,11 @@
         </div>
             
         
-        <button class="btn btn-primary mb-3 rounded-pill" @onclick="(() => HandleItemReferenceAdd())"><i class="oi oi-plus"></i></button>
+        <button class="btn btn-primary mb-3 rounded-pill" type="button" @onclick="(() => HandleItemReferenceAdd())"><i class="oi oi-plus"></i></button>
         <table class="table table-borderless table-striped table-hover">
             <thead class="thead-dark">
                 <tr>
+                    <th>POCode</th>
                     <th>Code</th>
                     <th>Qty</th>
                     <th>Price</th>
@@ -75,17 +77,20 @@
             <tbody>
                 @foreach (var item in ePRService.ItemLists.Where(x => x.POCode == Id))
                 {
-                    <tr>
-                        <td>@item.Code</td>
-                        <td>@item.Qty</td>
-                        <td>@item.Price</td>
-                        <td><button class="btn btn-danger rounded-pill" @onclick="DeleteItem"><i class="oi oi-minus"></i></button></td>
-                    </tr>
+                <tr>
+                    <td>@item.POCode</td>
+                    <td>@item.Code</td>
+                    <td>@item.Qty</td>
+                    <td>@item.Price</td>
+                    <td><button class="btn btn-danger rounded-pill" type="button" @onclick="() => DeleteItem(item.Id)"><i class="oi oi-minus"></i></button></td>
+                </tr>
                 }
             </tbody>
         </table>
-        <button class="btn btn-success mb-3" type="submit">Save</button>
-        <button class="btn btn-warning mb-3" @onclick="Cancel">Cancel</button>
+        <div>
+            <button class="btn btn-success mb-3" type="submit">Save</button>
+            <button class="btn btn-warning mb-3" @onclick="Cancel">Cancel</button>
+        </div>
     </EditForm>
 </body>
 
@@ -97,7 +102,7 @@
     protected override async Task OnParametersSetAsync()
     {
         newPurchaseOrderModel = await ePRService.GetPurchaseOrderModelId((int)Id);
-    }    
+    }
 
     ItemListModel newItemListModel = new ItemListModel();
 
@@ -118,9 +123,10 @@
         NavigationManager.NavigateTo($"/ItemList/{Id}");
     }
 
-    private void DeleteItem()
+    private void DeleteItem(int id)
     {
-        ePRService.DeletePurchaseOrderItemList(newItemListModel.Code);
+        ePRService.DeletePurchaseOrderItemList(id);
+        NavigationManager.NavigateTo($"/ViewPR/{Id}", true);
     }
 
     private void Cancel()
@@ -131,6 +137,6 @@
     async Task HandleSave()
     {
         await ePRService.UpdatePurchaseOrderModel(newPurchaseOrderModel);
-        NavigationManager.NavigateTo("/purchaseorder");
+        NavigationManager.NavigateTo("/purchaseorder", true);
     }
 }

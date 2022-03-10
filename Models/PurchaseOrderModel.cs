@@ -11,9 +11,11 @@ namespace BlazorReportingTools.Models
     public class PurchaseOrderModel
     {        
 
-        [Key]
+        [Key]        
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        // [Editable(true)] NOT WORKING
         [Required]
+        [Range(1, int.MaxValue, ErrorMessage = "Please enter a {0}")]
         public int Code { get; set; }
         
         [Required]
@@ -23,10 +25,12 @@ namespace BlazorReportingTools.Models
         public DateTime Date { get; set; } = DateTime.Now;
         
         [Required]
+        [Range(1, int.MaxValue, ErrorMessage = "Please enter a {0}")]
         public int DocNumber { get; set; }
-        
+
         [Required]
-        public int Supplier { get; set; }        
+        [Range(1, int.MaxValue, ErrorMessage="Please enter a {0}")]
+        public int Supplier { get; set; }
 
         [Required]
         public string AddressLine1 { get; set; }
