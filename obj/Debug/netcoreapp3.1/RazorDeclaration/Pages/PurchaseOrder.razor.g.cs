@@ -99,7 +99,7 @@ using BlazorReportingTools.Models;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 48 "C:\Users\Timothy Yeo\source\repos\blazor-presoft\Pages\PurchaseOrder.razor"
+#line 49 "C:\Users\Timothy Yeo\source\repos\blazor-presoft\Pages\PurchaseOrder.razor"
        
 
     protected override async Task OnInitializedAsync()
@@ -110,7 +110,7 @@ using BlazorReportingTools.Models;
 
     private void AddPR()
     {
-        NavigationManager.NavigateTo("/PRCreate");
+        NavigationManager.NavigateTo("/ViewPR");
     }
 
     private void ViewPR(int id)
@@ -124,12 +124,12 @@ using BlazorReportingTools.Models;
         await ePRService.DeletePurchaseOrderItemList(id);
 
         NavigationManager.NavigateTo("/purchaseorder", true);
-
     }
 
 #line default
 #line hidden
 #nullable disable
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private IJSRuntime JsRuntime { get; set; }
         [global::Microsoft.AspNetCore.Components.InjectAttribute] private NavigationManager NavigationManager { get; set; }
         [global::Microsoft.AspNetCore.Components.InjectAttribute] private IePRService ePRService { get; set; }
     }

@@ -55,7 +55,7 @@ namespace BlazorReportingTools.Controllers
                 return NotFound("Sorry, PurchaseOrder not found.");
 
             dbEntity.Code = entity.Code;
-            dbEntity.Name = entity.Name;
+            dbEntity.SupplierName = entity.SupplierName;
             dbEntity.DocNumber = entity.DocNumber;
             dbEntity.Supplier = entity.Supplier;
             dbEntity.AddressLine1 = entity.AddressLine1;

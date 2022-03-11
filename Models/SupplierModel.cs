@@ -18,10 +18,9 @@ namespace BlazorReportingTools.Models
         [Required]
         public string Name { get; set; }
 
-        [Required]
-        public string AddressLine1 { get; set; }
 
-        [Required]
+        // ADDRESSES
+        public string AddressLine1 { get; set; }
         public string AddressLine2 { get; set; }
         public string AddressLine3 { get; set; }
         public string AddressLine4 { get; set; }

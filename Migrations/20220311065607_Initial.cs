@@ -39,14 +39,14 @@ namespace BlazorReportingTools.Migrations
                 columns: table => new
                 {
                     Code = table.Column<int>(nullable: false),
-                    Name = table.Column<string>(nullable: false),
+                    SupplierName = table.Column<string>(nullable: true),
                     Date = table.Column<DateTime>(nullable: false),
                     DocNumber = table.Column<int>(nullable: false),
                     Supplier = table.Column<int>(nullable: false),
-                    AddressLine1 = table.Column<string>(nullable: false),
-                    AddressLine2 = table.Column<string>(nullable: false),
-                    AddressLine3 = table.Column<string>(nullable: false),
-                    AddressLine4 = table.Column<string>(nullable: false)
+                    AddressLine1 = table.Column<string>(nullable: true),
+                    AddressLine2 = table.Column<string>(nullable: true),
+                    AddressLine3 = table.Column<string>(nullable: true),
+                    AddressLine4 = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -59,8 +59,8 @@ namespace BlazorReportingTools.Migrations
                 {
                     Code = table.Column<int>(nullable: false),
                     Name = table.Column<string>(nullable: false),
-                    AddressLine1 = table.Column<string>(nullable: false),
-                    AddressLine2 = table.Column<string>(nullable: false),
+                    AddressLine1 = table.Column<string>(nullable: true),
+                    AddressLine2 = table.Column<string>(nullable: true),
                     AddressLine3 = table.Column<string>(nullable: true),
                     AddressLine4 = table.Column<string>(nullable: true)
                 },

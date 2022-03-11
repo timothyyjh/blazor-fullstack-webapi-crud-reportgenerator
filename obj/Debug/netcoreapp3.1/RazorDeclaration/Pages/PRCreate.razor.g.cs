@@ -98,13 +98,39 @@ using BlazorReportingTools.Models;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 69 "C:\Users\Timothy Yeo\source\repos\blazor-presoft\Pages\PRCreate.razor"
+#line 112 "C:\Users\Timothy Yeo\source\repos\blazor-presoft\Pages\PRCreate.razor"
        
+    [Parameter]
+    public int? Id { get; set; }
+
+    string btnText = string.Empty;
+
     PurchaseOrderModel newPurchaseOrderModel = new PurchaseOrderModel();
     ItemModel newItem = new ItemModel();
+    SupplierModel newSupplier = new SupplierModel();
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if (Id == null)
+        { }
+        else
+            newPurchaseOrderModel = await ePRService.GetPurchaseOrderModelId((int)Id);
+    }
+
+    private void HandleItemReferenceAdd()
+    {
+        NavigationManager.NavigateTo($"/ItemList/{Id}");
+    }
+
+    private void DeleteItem(int id)
+    {
+        ePRService.DeletePurchaseOrderItemList(id);
+        NavigationManager.NavigateTo($"/ViewPR/{Id}", true);
+    }
 
     protected override async Task OnInitializedAsync()
     {
+        btnText = Id == null ? "Save New Item" : "Update Item";
         await ePRService.GetSupplier();
         await ePRService.GetPurchaseOrderItemList();
     }

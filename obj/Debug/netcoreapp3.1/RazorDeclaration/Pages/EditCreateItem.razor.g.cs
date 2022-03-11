@@ -111,6 +111,7 @@ using BlazorReportingTools.Models;
     protected override async Task OnInitializedAsync()
     {
         btnText = Id == null ? "Save New Item" : "Update Item";
+
         await ePRService.GetItem();
     }
 

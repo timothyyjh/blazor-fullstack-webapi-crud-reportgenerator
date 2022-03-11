@@ -90,19 +90,15 @@ namespace BlazorReportingTools.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("AddressLine1")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("AddressLine2")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("AddressLine3")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("AddressLine4")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("Date")
@@ -111,12 +107,11 @@ namespace BlazorReportingTools.Migrations
                     b.Property<int>("DocNumber")
                         .HasColumnType("int");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("Supplier")
                         .HasColumnType("int");
+
+                    b.Property<string>("SupplierName")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Code");
 
@@ -129,11 +124,9 @@ namespace BlazorReportingTools.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("AddressLine1")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("AddressLine2")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("AddressLine3")

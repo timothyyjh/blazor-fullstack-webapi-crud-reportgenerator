@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Components;
 using Microsoft.EntityFrameworkCore;
 
 namespace BlazorReportingTools.Models
@@ -15,11 +16,11 @@ namespace BlazorReportingTools.Models
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         // [Editable(true)] NOT WORKING
         [Required]
-        [Range(1, int.MaxValue, ErrorMessage = "Please enter a {0}")]
+        [Range(1, int.MaxValue, ErrorMessage = "Please enter a {0}")]       
         public int Code { get; set; }
         
-        [Required]
-        public string Name { get; set; }
+        
+        public string SupplierName { get; set; }
         
         [Required]
         public DateTime Date { get; set; } = DateTime.Now;
@@ -32,16 +33,9 @@ namespace BlazorReportingTools.Models
         [Range(1, int.MaxValue, ErrorMessage="Please enter a {0}")]
         public int Supplier { get; set; }
 
-        [Required]
         public string AddressLine1 { get; set; }
-
-        [Required]
         public string AddressLine2 { get; set; }
-
-        [Required]
-        public string AddressLine3 { get; set; }
-
-        [Required]
+        public string AddressLine3 { get; set; }        
         public string AddressLine4 { get; set; }        
     }
 }
