@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BlazorReportingTools.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20220311065607_Initial")]
-    partial class Initial
+    [Migration("20220314033446_TicketRename")]
+    partial class TicketRename
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -89,7 +89,9 @@ namespace BlazorReportingTools.Migrations
             modelBuilder.Entity("BlazorReportingTools.Models.PurchaseOrderModel", b =>
                 {
                     b.Property<int>("Code")
-                        .HasColumnType("int");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("AddressLine1")
                         .HasColumnType("nvarchar(max)");
@@ -144,6 +146,39 @@ namespace BlazorReportingTools.Migrations
                     b.HasKey("Code");
 
                     b.ToTable("Suppliers");
+                });
+
+            modelBuilder.Entity("BlazorReportingTools.Models.TicketModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("ActivityCode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DocDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("ExpiryDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Outlet")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ReceiptNo")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Tickets");
                 });
 
             modelBuilder.Entity("BlazorReportingTools.Models.ItemListModel", b =>

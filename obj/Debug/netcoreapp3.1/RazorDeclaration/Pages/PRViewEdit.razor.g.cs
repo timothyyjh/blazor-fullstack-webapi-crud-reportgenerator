@@ -90,7 +90,7 @@ using BlazorReportingTools.Models;
 #line hidden
 #nullable disable
     [Microsoft.AspNetCore.Components.RouteAttribute("/ViewPR/")]
-    [Microsoft.AspNetCore.Components.RouteAttribute("/ViewPR/{id:int}")]
+    [Microsoft.AspNetCore.Components.RouteAttribute("/ViewPR/{Id:int}")]
     public partial class PRViewEdit : Microsoft.AspNetCore.Components.ComponentBase
     {
         #pragma warning disable 1998
@@ -99,27 +99,34 @@ using BlazorReportingTools.Models;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 128 "C:\Users\Timothy Yeo\source\repos\blazor-presoft\Pages\PRViewEdit.razor"
+#line 137 "C:\Users\Timothy Yeo\source\repos\blazor-presoft\Pages\PRViewEdit.razor"
        
     [Parameter]
     public int? Id { get; set; }
 
     protected override async Task OnParametersSetAsync()
     {
-        if (Id == null)
-        { }
-        else
+        if (Id != null)
         {
             newPurchaseOrderModel = await ePRService.GetPurchaseOrderModelId((int)Id);
+        }
+        else
+        {
+            // Implementation to be corrected
+            
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 150 "C:\Users\Timothy Yeo\source\repos\blazor-presoft\Pages\PRViewEdit.razor"
+                                                                                                    
         }
     }
 
     ItemListModel newItemListModel = new ItemListModel();
-
     PurchaseOrderModel newPurchaseOrderModel = new PurchaseOrderModel();
-
     SupplierModel newSupplier = new SupplierModel();
-
     ItemModel newItem = new ItemModel();
 
     protected override async Task OnInitializedAsync()
@@ -152,7 +159,7 @@ using BlazorReportingTools.Models;
             NavigationManager.NavigateTo("/purchaseorder", true);
         }
         else
-        { 
+        {
             await ePRService.UpdatePurchaseOrderModel(newPurchaseOrderModel);
             NavigationManager.NavigateTo("/purchaseorder", true);
         }

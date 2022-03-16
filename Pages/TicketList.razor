@@ -1,0 +1,17 @@
+﻿@page "/TicketList"
+@inject IePRService ePRService
+@inject NavigationManager NavigationManager
+
+<h3>Ticket List</h3>
+
+<body>
+    <button @onclick="AddTicket" class="btn btn-primary">Add Ticket</button>
+</body>
+
+@code {
+
+    private void AddTicket()
+    {
+        NavigationManager.NavigateTo("/Ticket");
+    }
+}

@@ -1,11 +1,13 @@
 ﻿@page "/ViewPR/"
-@page "/ViewPR/{id:int}"
+@page "/ViewPR/{Id:int}"
 @inject IePRService ePRService
 @inject NavigationManager NavigationManager
 
 @if (Id == null)
 {
-    <h3>Create a New Purchase Order</h3>
+    //Implementation to be corrected
+    <h3>Create a New Purchase Order [Code: @*@ePRService.PurchaseOrders.OrderByDescending(x => x.Code).FirstOrDefault().Code + 1;*@] </h3>
+
 }
 else
 {
@@ -33,13 +35,14 @@ else
                     <tr>
                         <td>
                             <label for="code"></label>
-                            @if (@Id == null)
+                            @* Need to display last Code ID + 1 *@
+                            @if (Id != null)
                             {
-                                <input id="codeinput" class="form-control" @bind-value="@newPurchaseOrderModel.Code" />
+                                @Id
                             }
                             else
                             {
-                                <input id="codeinput" readonly class="form-control" @bind-value="@newPurchaseOrderModel.Code" />                            
+                                @*@ePRService.PurchaseOrders.OrderByDescending(x => x.Code).FirstOrDefault().Code + 1;*@
                             }
                         </td>
                         <td>
@@ -57,11 +60,13 @@ else
                             </InputSelectNumber>
                         </td>
                         <td>
+                            @* Cascading inputs not auto selecting *@
                             <label id="suppliername"></label>
                             <InputSelect id="suppliernameselect" @bind-Value="newPurchaseOrderModel.SupplierName" class="form-control">
-                                if @foreach (var item in ePRService.Suppliers.Where(x => x.Code == newPurchaseOrderModel.Supplier))
+                                @foreach (var item in ePRService.Suppliers.Where(x => x.Code == newPurchaseOrderModel.Supplier))
                                 {
-                                    <option value="@item.Name" selected>@item.Name</option>
+                                    <option value="" disabled selected>Select the supplier's name</option>
+                                    <option value="@item.Name">@item.Name</option>
                                 }
                             </InputSelect>
                         </td>
@@ -74,18 +79,22 @@ else
                             @foreach (var item in ePRService.Suppliers.Where(x => x.Code == newPurchaseOrderModel.Supplier))
                             {
                                 <InputSelect id="supplieraddress" @bind-Value="newPurchaseOrderModel.AddressLine1" class="form-control">
+                                    <option value="" selected></option>
                                     <option value="@item.AddressLine1">@item.AddressLine1</option>
                                 </InputSelect>
 
                                 <InputSelect id="supplieraddress" @bind-Value="newPurchaseOrderModel.AddressLine2" class="form-control">
+                                    <option value="" selected></option>
                                     <option value="@item.AddressLine2">@item.AddressLine2</option>
                                 </InputSelect>
 
                                 <InputSelect id="supplieraddress" @bind-Value="newPurchaseOrderModel.AddressLine3" class="form-control">
+                                    <option value="" selected></option>
                                     <option value="@item.AddressLine3">@item.AddressLine3</option>
                                 </InputSelect>
 
                                 <InputSelect id="supplieraddress" @bind-Value="newPurchaseOrderModel.AddressLine4" class="form-control">
+                                    <option value="" selected></option>
                                     <option value="@item.AddressLine4">@item.AddressLine4</option>
                                 </InputSelect>
                             }
@@ -131,20 +140,20 @@ else
 
     protected override async Task OnParametersSetAsync()
     {
-        if (Id == null)
-        { }
-        else
+        if (Id != null)
         {
             newPurchaseOrderModel = await ePRService.GetPurchaseOrderModelId((int)Id);
+        }
+        else
+        {
+            // Implementation to be corrected
+            @*@ePRService.PurchaseOrders.OrderByDescending(x => x.Code).FirstOrDefault().Code + 1;*@
         }
     }
 
     ItemListModel newItemListModel = new ItemListModel();
-
     PurchaseOrderModel newPurchaseOrderModel = new PurchaseOrderModel();
-
     SupplierModel newSupplier = new SupplierModel();
-
     ItemModel newItem = new ItemModel();
 
     protected override async Task OnInitializedAsync()
@@ -177,7 +186,7 @@ else
             NavigationManager.NavigateTo("/purchaseorder", true);
         }
         else
-        { 
+        {
             await ePRService.UpdatePurchaseOrderModel(newPurchaseOrderModel);
             NavigationManager.NavigateTo("/purchaseorder", true);
         }

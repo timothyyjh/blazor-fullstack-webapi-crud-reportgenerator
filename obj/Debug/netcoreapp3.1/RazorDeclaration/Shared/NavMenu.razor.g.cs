@@ -97,7 +97,7 @@ using BlazorReportingTools.Models;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 58 "C:\Users\Timothy Yeo\source\repos\blazor-presoft\Shared\NavMenu.razor"
+#line 43 "C:\Users\Timothy Yeo\source\repos\blazor-presoft\Shared\NavMenu.razor"
        
     private bool collapseNavMenu = true;
 

@@ -1,0 +1,69 @@
+﻿@page "/Ticket"
+@inject IePRService ePRService
+@inject NavigationManager NavigationManager
+
+<h3>Ticket</h3>
+
+<body>
+    <EditForm Model="newTicket" OnValidSubmit="HandleSubmit">
+        <DataAnnotationsValidator />
+        <ValidationSummary />     
+
+        <table class="table table-striped">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Receipt No:</th>                       
+                    <th>Doc Date:</th>                            
+                    <td>Outlet:</td>                            
+                    <td>Start Date:</td>                            
+                    <td>Expiry Date:</td>                            
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><InputDate @bind-Value="newTicket.DocDate" class="form-control" /></td>
+                    <td><InputNumber @bind-Value="newTicket.ReceiptNo" class="form-control" /></td>
+                    <td><InputSelect @bind-Value="newTicket.Outlet" class="form-control" /></td>
+                    <td><InputDate @bind-Value="newTicket.StartDate" class="form-control" /></td>
+                    <td><InputDate @bind-Value="newTicket.ExpiryDate" class="form-control" /></td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <div class="container-fluid">
+            <table class="table table-striped">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Activity Code:</th>
+                        <th>Quantity:</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td>
+                            <InputSelect @bind-Value="newTicket.ActivityCode" class="form-control">
+                                @foreach (var item in ePRService.Tickets)
+                                {
+                                    @item.ActivityCode
+                                }
+                            </InputSelect>
+                        </td>
+                        <td>
+                            <InputNumber @bind-Value="newTicket.Quantity" class="form-control" />
+                        </td>                        
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </EditForm>
+</body>
+
+@code {
+    TicketModel newTicket = new TicketModel();
+
+    private void HandleSubmit()
+    {
+
+    }
+}

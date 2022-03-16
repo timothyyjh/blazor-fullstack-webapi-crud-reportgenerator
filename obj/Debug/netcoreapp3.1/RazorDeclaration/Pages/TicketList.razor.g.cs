@@ -89,9 +89,8 @@ using BlazorReportingTools.Models;
 #line default
 #line hidden
 #nullable disable
-    [Microsoft.AspNetCore.Components.RouteAttribute("/ItemList")]
-    [Microsoft.AspNetCore.Components.RouteAttribute("/ItemList/{id:int}")]
-    public partial class ItemList : Microsoft.AspNetCore.Components.ComponentBase
+    [Microsoft.AspNetCore.Components.RouteAttribute("/TicketList")]
+    public partial class TicketList : Microsoft.AspNetCore.Components.ComponentBase
     {
         #pragma warning disable 1998
         protected override void BuildRenderTree(Microsoft.AspNetCore.Components.Rendering.RenderTreeBuilder __builder)
@@ -99,40 +98,12 @@ using BlazorReportingTools.Models;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 59 "C:\Users\Timothy Yeo\source\repos\blazor-presoft\Pages\ItemList.razor"
+#line 11 "C:\Users\Timothy Yeo\source\repos\blazor-presoft\Pages\TicketList.razor"
        
-    [Parameter]
-    public int? Id { get; set; }
 
-    ItemListModel newItemListModel = new ItemListModel();
-    PurchaseOrderModel newPurchaseOrderModel = new PurchaseOrderModel();
-
-    protected override async Task OnParametersSetAsync()
+    private void AddTicket()
     {
-        if (Id != null)
-        {
-            newPurchaseOrderModel = await ePRService.GetPurchaseOrderModelId((int)Id);
-        }
-        else
-        {
-            
-        }
-    }
-
-    protected override async Task OnInitializedAsync()
-    {
-        await ePRService.GetItem();
-    }
-
-    async Task HandleSubmit()
-    {
-        await ePRService.CreatePurchaseOrderItemList(newItemListModel);
-        NavigationManager.NavigateTo($"/ViewPR/{Id}");
-    }
-
-    private void Cancel()
-    {
-        NavigationManager.NavigateTo($"/ViewPR/{Id}");
+        NavigationManager.NavigateTo("/Ticket");
     }
 
 #line default

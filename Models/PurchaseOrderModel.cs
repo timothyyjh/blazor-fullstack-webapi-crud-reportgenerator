@@ -11,15 +11,10 @@ namespace BlazorReportingTools.Models
 {   
     public class PurchaseOrderModel
     {        
-
-        [Key]        
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        // [Editable(true)] NOT WORKING
+        [Key]
         [Required]
-        [Range(1, int.MaxValue, ErrorMessage = "Please enter a {0}")]       
         public int Code { get; set; }
-        
-        
+                
         public string SupplierName { get; set; }
         
         [Required]
@@ -37,5 +32,7 @@ namespace BlazorReportingTools.Models
         public string AddressLine2 { get; set; }
         public string AddressLine3 { get; set; }        
         public string AddressLine4 { get; set; }        
+
+        public ICollection<ItemListModel> ItemLists { get; set; }
     }
 }

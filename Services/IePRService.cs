@@ -15,6 +15,8 @@ namespace BlazorReportingTools.Services
         List<BudgetYearModel> BudgetYears { get; set; }
         List<PurchaseOrderModel> PurchaseOrders { get; set; }
         List<ItemListModel> ItemLists { get; set; }
+        List<TicketModel> Tickets { get; set; }
+        List<OutletModel> Outlets { get; set; }
 
         // SUPPLIER SERVICES
         Task GetSupplier();
@@ -50,5 +52,21 @@ namespace BlazorReportingTools.Services
         Task CreatePurchaseOrderItemList(ItemListModel supplier);
         Task UpdatePurchaseOrderItemList(ItemListModel supplier);
         Task DeletePurchaseOrderItemList(int id);
+
+        //Ticket Service
+        Task GetTicketItemList();
+        Task<ItemListModel> GetTicketItemListID(int id);
+        Task CreateTicketItemList(ItemListModel supplier);
+        Task UpdateTicketItemList(ItemListModel supplier);
+        Task DeleteTicketItemList(int id);
+
+        //Outlet Controller
+        Task GetOutletItemList();
+        Task<ItemListModel> GetOutletItemListID(int id);
+        Task CreateOutletItemList(ItemListModel supplier);
+        Task UpdateOutletItemList(ItemListModel supplier);
+        Task DeleteOutletItemList(int id);
+
+
     }
 }

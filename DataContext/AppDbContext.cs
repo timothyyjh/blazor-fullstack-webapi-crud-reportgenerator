@@ -16,5 +16,7 @@ namespace BlazorReportingTools.DataContext
         public DbSet<BudgetYearModel> BudgetYears { get; set; }    
         public DbSet<PurchaseOrderModel> PurchaseOrders { get; set; }
         public DbSet<ItemListModel> ItemLists { get; set; }
+        public DbSet<TicketModel> Tickets { get; set; }
+        public DbSet<OutletModel> Outlets { get; set; }
     }
 }

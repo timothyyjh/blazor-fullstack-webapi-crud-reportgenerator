@@ -1,6 +1,8 @@
-﻿@page "/ItemList/{id:int}"
+﻿@page  "/ItemList"
+@page "/ItemList/{id:int}"
 @inject IePRService ePRService
 @inject NavigationManager NavigationManager
+
 
 <h3>Item Selector for Purchase Order [Code: @newPurchaseOrderModel.Code ]</h3>
 
@@ -22,8 +24,9 @@
                 <tbody>
                     <tr>
                         <td>
-                            @* STILL INCOMPLETE- bind page ID with POcode of itemlist *@
-                            <InputSelectNumber @bind-Value="newItemListModel.POCode" class="form-control">
+                            @* STILL INCOMPLETE- bind page ID with POcode of itemlist and enable for first time creation of PO*@
+                            <InputSelectNumber @bind-Value="newItemListModel.POCode" class="form-control">                                
+                                <option value="0" selected disabled>Select PO Id</option>
                                 <option value="@Id">@Id</option>
                             </InputSelectNumber>
                         </td>
@@ -62,8 +65,14 @@
 
     protected override async Task OnParametersSetAsync()
     {
-        newPurchaseOrderModel = await ePRService.GetPurchaseOrderModelId((int)Id);
-        // newItemListModel = await ePRService.GetPurchaseOrderItemListID((int)Id);
+        if (Id != null)
+        {
+            newPurchaseOrderModel = await ePRService.GetPurchaseOrderModelId((int)Id);
+        }
+        else
+        {
+            
+        }
     }
 
     protected override async Task OnInitializedAsync()

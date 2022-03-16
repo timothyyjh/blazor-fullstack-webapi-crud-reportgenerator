@@ -199,5 +199,61 @@ namespace BlazorReportingTools.Services
         {
             await _http.DeleteAsync($"http://localhost:51885/api/itemlist/{id}");
         }
+
+        // Ticket Service
+
+        public List<TicketModel> Tickets { get; set; } = new List<TicketModel>();
+        public Task GetTicketItemList()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<ItemListModel> GetTicketItemListID(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task CreateTicketItemList(ItemListModel supplier)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task UpdateTicketItemList(ItemListModel supplier)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task DeleteTicketItemList(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        // Outlet List
+
+        public List<OutletModel> Outlets { get; set; } = new List<OutletModel>();
+        public Task GetOutletItemList()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<ItemListModel> GetOutletItemListID(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task CreateOutletItemList(ItemListModel supplier)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task UpdateOutletItemList(ItemListModel supplier)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task DeleteOutletItemList(int id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

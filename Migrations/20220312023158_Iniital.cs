@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace BlazorReportingTools.Migrations
 {
-    public partial class Initial : Migration
+    public partial class Iniital : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -38,7 +38,8 @@ namespace BlazorReportingTools.Migrations
                 name: "PurchaseOrders",
                 columns: table => new
                 {
-                    Code = table.Column<int>(nullable: false),
+                    Code = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     SupplierName = table.Column<string>(nullable: true),
                     Date = table.Column<DateTime>(nullable: false),
                     DocNumber = table.Column<int>(nullable: false),

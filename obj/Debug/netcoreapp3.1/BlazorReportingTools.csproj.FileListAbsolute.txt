@@ -188,3 +188,7 @@ C:\Users\Timothy Yeo\source\repos\blazor-presoft\obj\Debug\netcoreapp3.1\RazorDe
 C:\Users\Timothy Yeo\source\repos\blazor-presoft\obj\Debug\netcoreapp3.1\Razor\Pages\PRViewEdit.razor.g.cs
 C:\Users\Timothy Yeo\source\repos\blazor-presoft\obj\Debug\netcoreapp3.1\RazorDeclaration\Pages\AddItemToPO.razor.g.cs
 C:\Users\Timothy Yeo\source\repos\blazor-presoft\obj\Debug\netcoreapp3.1\Razor\Pages\AddItemToPO.razor.g.cs
+C:\Users\Timothy Yeo\source\repos\blazor-presoft\obj\Debug\netcoreapp3.1\RazorDeclaration\Pages\Ticket.razor.g.cs
+C:\Users\Timothy Yeo\source\repos\blazor-presoft\obj\Debug\netcoreapp3.1\Razor\Pages\Ticket.razor.g.cs
+C:\Users\Timothy Yeo\source\repos\blazor-presoft\obj\Debug\netcoreapp3.1\RazorDeclaration\Pages\Ticketlist.razor.g.cs
+C:\Users\Timothy Yeo\source\repos\blazor-presoft\obj\Debug\netcoreapp3.1\Razor\Pages\Ticketlist.razor.g.cs
